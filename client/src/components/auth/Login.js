@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   //This is our form data stored in state
   const [formData, setFormData] = useState({
     email: '',
@@ -20,11 +23,15 @@ const Login = () => {
   //onSubmit function
   const onSubmit = async (event) => {
     event.preventDefault(); //always prevent default for submit functions.
-    console.log('SUCCESS');
+    login(email, password);
   };
 
-  //in the input section, we use the term 'required' to add client-side validation
+  //Redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
+  //in the input section, we use the term 'required' to add client-side validation
   return (
     <Fragment>
       <h1 className="large text-primary">Log In</h1>
@@ -62,4 +69,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

@@ -1,6 +1,8 @@
 //this is our alert action that is going to occur. First we dispatch set_alert, then we dispatch remove_alert.
 //another side note, since we have this alert action set up, we can call this action from anywhere in the codebase.
 
+//Also, the actions folder is responsible for making axios calls to the backend.
+
 import { v4 as uuidv4 } from 'uuid'; //importing uuid as v4 (which is old).
 import { SET_ALERT } from './types';
 import { REMOVE_ALERT } from './types';

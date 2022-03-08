@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux'; //we're connecting this component to redux
 import { setAlert } from '../../actions/alert'; //we bring in this alert action, then pass it into connect() below;
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   //destructuring setAlert and pulling it from props
   //This is our form data stored in state
   const [formData, setFormData] = useState({
@@ -30,12 +31,16 @@ const Register = ({ setAlert }) => {
       //set an alert that says "passwords don't match" and pass in the setAlert props.
       setAlert('passwords need to match', 'danger'); // these are the msg and alertType parameters.
     } else {
-      console.log('SUCCESS'); // the 'success' parameter changes css color to green
+      register({ name, email, password }); // the 'success' parameter changes css color to green
     }
   };
 
-  //in the input section, we use the term 'required' to add client-side validation
+  //Redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
+  //in the input section, we use the term 'required' to add client-side validation
   return (
     <Fragment>
       <h1 className="large text-primary">Sign Up</h1>
@@ -96,6 +101,12 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Register); //we're exporting this component being connected in redux
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register); //we're exporting this component being connected in redux
