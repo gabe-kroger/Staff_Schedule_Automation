@@ -68,6 +68,15 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             required
           />
         </div>
+        <div>
+          <select 
+          defaultValue={"default"}
+          onChange={(event) => onChange(event)}>
+            <option value="default" disabled hidden>Select a Desired Role:</option>
+            <option value="Assistant">Assistant</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
         <div className="form-group">
           <input
             onChange={(event) => onChange(event)}
