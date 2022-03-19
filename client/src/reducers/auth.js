@@ -6,6 +6,7 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
 } from '../actions/types';
 
 //this is our state for authentication
@@ -40,6 +41,7 @@ export default function (state = initialState, action) {
     case REGISTER_FAIL: //if register fails, we want to display an error message
     case AUTH_ERROR: //Auth error is doing the same thing as register fail
     case LOGIN_FAIL:
+    case LOGOUT:
       localStorage.removeItem('token');
       return {
         ...state,
