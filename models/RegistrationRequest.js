@@ -1,7 +1,7 @@
-//this code is designed to create an outline of our user object
+//this code is designed to create an outline of our registration request object
 
 const mongoose = require("mongoose"); //importing mongoose
-const UserSchema = new mongoose.Schema({
+const RegistrationRequestSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -14,9 +14,6 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  avatar: {
-    type: String,
   },
   // role represents users access level
   // 0 = admin
@@ -32,4 +29,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("user", UserSchema); //exporting UserSchema model
+module.exports = RegistrationRequest = mongoose.model(
+  "registrationrequest",
+  RegistrationRequestSchema
+); //exporting UserSchema model
