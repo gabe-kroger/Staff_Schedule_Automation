@@ -1,19 +1,39 @@
-//this is boilerplate code that brings in createStore, then we need to run createStore and pass it into a variable
-
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk'; //thunk is our middleware
-import rootReducer from './reducers'; //we'll have multiple reducers, but they'll be combined in a rootReducer.
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
+import setAuthToken from './utils/setAuthToken';
 
-const initialState = {}; //this is our initial state object
+const initialState = {};
 
-const middleware = [thunk]; //thunk is our middleware
+const middleware = [thunk];
 
-// creating the store and taking in the root reducer and the initial state, as well as the middleware variable.
 const store = createStore(
   rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
+/*
+  NOTE: set up a store subscription listener
+  to store the users token in localStorage
+ */
+
+/*
+  initialize current state from redux store for subscription comparison
+  preventing undefined error
+ */
+let currentState = store.getState();
+
+store.subscribe(() => {
+  // keep track of the previous and current state to compare changes
+  let previousState = currentState;
+  currentState = store.getState();
+  // if the token changes set the value in localStorage and axios headers
+  if (previousState.auth.token !== currentState.auth.token) {
+    const token = currentState.auth.token;
+    setAuthToken(token);
+  }
+});
 
 export default store;
