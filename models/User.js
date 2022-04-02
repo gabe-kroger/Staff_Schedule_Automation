@@ -1,6 +1,6 @@
 //this code is designed to create an outline of our user object
 
-const mongoose = require("mongoose"); //importing mongoose
+const mongoose = require('mongoose'); //importing mongoose
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,8 +23,12 @@ const UserSchema = new mongoose.Schema({
   // 1 = assistant
   // -1 = root
   role: {
-    type: Number,
+    type: String,
     required: true,
+  },
+  status: {
+    type: Boolean,
+    default: false,
   },
   date: {
     type: Date,
@@ -32,4 +36,4 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("user", UserSchema); //exporting UserSchema model
+module.exports = User = mongoose.model('user', UserSchema); //exporting UserSchema model

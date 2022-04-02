@@ -13,11 +13,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    role: '',
     password: '',
     password2: '',
   });
 
-  const { name, email, password, password2 } = formData; //Destructuring to save space in the future.
+  const { name, email, role, password, password2 } = formData; //Destructuring to save space in the future.
 
   //onChange function that uses our setter function (setFormData), then uses the spread operator to copy the destructured variables inside formData, then we want to change our name state to the value of the input.
   const onChange = (event) => {
@@ -31,7 +32,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       //set an alert that says "passwords don't match" and pass in the setAlert props.
       setAlert('passwords need to match', 'danger'); // these are the msg and alertType parameters.
     } else {
-      register({ name, email, password }); // the 'success' parameter changes css color to green
+      register({ name, email, role, password }); // the 'success' parameter changes css color to green
     }
   };
 
@@ -68,14 +69,15 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             required
           />
         </div>
-        <div>
-          <select 
-          defaultValue={"default"}
-          onChange={(event) => onChange(event)}>
-            <option value="default" disabled hidden>Select a Desired Role:</option>
-            <option value="Assistant">Assistant</option>
-            <option value="Admin">Admin</option>
-          </select>
+        <div className="form-groupp">
+          <input
+            onChange={(event) => onChange(event)}
+            value={role}
+            type="text"
+            placeholder="User Role"
+            name="role"
+            required
+          />
         </div>
         <div className="form-group">
           <input
