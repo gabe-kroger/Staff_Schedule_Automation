@@ -11,7 +11,47 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <Link to="/profiles">Settings</Link>
       </li>
       <li>
-        <Link to="/posts">Posts</Link>
+        <Link to="/posts">Requests</Link>
+      </li>
+      <li>
+        <Link to="/dashboard">
+          <i className="fas fa-user" />{' '}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <a onClick={logout} href="#!">
+          <i className="fas fa-sign-out-alt" />{' '}
+          <span className="hide-sm">Logout</span>
+        </a>
+      </li>
+    </ul>
+  );
+
+  const adminLinks = (
+    <ul>
+      <li>
+        <Link to="/profiles">Settings</Link>
+      </li>
+      <li>
+        <Link to="/dashboard">
+          <i className="fas fa-user" />{' '}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <a onClick={logout} href="#!">
+          <i className="fas fa-sign-out-alt" />{' '}
+          <span className="hide-sm">Logout</span>
+        </a>
+      </li>
+    </ul>
+  );
+
+  const assistantLinks = (
+    <ul>
+      <li>
+        <Link to="/profiles">Settings</Link>
       </li>
       <li>
         <Link to="/dashboard">

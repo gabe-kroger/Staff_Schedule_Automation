@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   //destructuring setAlert and pulling it from props
-  //This is our form data stored in state
+  //This is our form data object which is stored in state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
