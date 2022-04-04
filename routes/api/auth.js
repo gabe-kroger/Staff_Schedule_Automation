@@ -28,6 +28,7 @@ router.post(
   [
     check('email', 'Please include a valid email').isEmail(), //making sure there's an email
     check('password', 'Password is required').exists(), // making sure the password exists
+    check('status', 'Status is required').exists(), // making sure the password exists
   ],
   //checking for errors in the req.body
   async (req, res) => {
@@ -36,7 +37,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { email, password } = req.body;
+    const { email, password, status } = req.body;
 
     try {
       //see if user exists
@@ -47,10 +48,19 @@ router.post(
           .json({ errors: [{ msg: 'Invalid credentials' }] });
       }
 
-      //match the user email and password
+      //match the input password with the user's password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         //if no match, return invalid credentials
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid credentials' }] });
+      }
+      console.log(status);
+
+      //match the input status with the user's status
+      if (status !== user.status.toString()) {
+        //if no match, Invalid Credentials
         return res
           .status(400)
           .json({ errors: [{ msg: 'Invalid credentials' }] });
