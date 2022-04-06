@@ -12,10 +12,7 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/instructors', require('./routes/api/instructors'));
-app.use(
-  '/api/registrationrequests',
-  require('./routes/api/registrationrequests')
-);
+app.use('/api/courses', require('./routes/api/courses'));
 
 const PORT = process.env.port || 5000;
 
