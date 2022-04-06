@@ -28,6 +28,13 @@ function authReducer(state = initialState, action) {
         user: payload,
       };
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: false,
+        loading: false,
+        token: null,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
