@@ -26,8 +26,6 @@ const Dashboard = ({
       {profile !== null ? (
         <>
           <DashboardActions />
-          <Experience experience={profile.experience} />
-          <Education education={profile.education} />
 
           <div className="my-2">
             <button className="btn btn-danger" onClick={() => deleteAccount()}>
@@ -62,3 +60,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
   Dashboard
 );
+
+/*  These components go below line 28.  I'll use these for "Add Instructor" and "Add Course"
+         <Experience experience={profile.experience} />
+          <Education education={profile.education} />
+*/
