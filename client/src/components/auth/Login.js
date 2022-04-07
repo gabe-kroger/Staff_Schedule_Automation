@@ -11,10 +11,10 @@ const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    status: '',
+    userStatus: '',
   });
 
-  const { email, password, status } = formData; //Destructuring to save space in the future.
+  const { email, password, userStatus } = formData; //Destructuring to save space in the future.
 
   //onChange function that uses our setter function (setFormData), then uses the spread operator to copy the destructured variables inside formData, then we want to change our name state to the value of the input.
   const onChange = (event) => {
@@ -24,7 +24,7 @@ const Login = ({ login, isAuthenticated }) => {
   //onSubmit function
   const onSubmit = async (event) => {
     event.preventDefault(); //always prevent default for submit functions.
-    login(email, password, status);
+    login(email, password, userStatus);
   };
 
   //Redirect if logged in
@@ -64,10 +64,10 @@ const Login = ({ login, isAuthenticated }) => {
         <div className="form-group">
           <input
             onChange={(event) => onChange(event)}
-            value={status}
+            value={userStatus}
             type="text"
             placeholder="Status"
-            name="status"
+            name="userStatus"
             maxLength="4"
             required
           />

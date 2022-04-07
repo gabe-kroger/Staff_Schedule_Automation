@@ -8,10 +8,10 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Settings</Link>
+        <Link to="/profiles">Requests</Link>
       </li>
       <li>
-        <Link to="/posts">Requests</Link>
+        <Link to="/posts">Settings</Link>
       </li>
       <li>
         <Link to="/dashboard">
@@ -31,7 +31,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const adminLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Settings</Link>
+        <Link to="/posts">Settings</Link>
       </li>
       <li>
         <Link to="/dashboard">
@@ -51,7 +51,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const assistantLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Settings</Link>
+        <Link to="/posts">Settings</Link>
       </li>
       <li>
         <Link to="/dashboard">
@@ -71,7 +71,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Settings</Link>
+        <Link to="/posts">Settings</Link>
       </li>
       <li>
         <Link to="/register">Register</Link>

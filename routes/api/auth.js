@@ -28,7 +28,7 @@ router.post(
   [
     check('email', 'Please include a valid email').isEmail(), //making sure there's an email
     check('password', 'Password is required').exists(), // making sure the password exists
-    check('status', 'Status is required').exists(), // making sure the password exists
+    check('userStatus', 'Status is required').exists(), // making sure the status exists
   ],
   //checking for errors in the req.body
   async (req, res) => {
@@ -37,7 +37,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { email, password, status } = req.body;
+    const { email, password, userStatus } = req.body;
 
     try {
       //see if user exists
@@ -56,10 +56,9 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: 'Invalid credentials' }] });
       }
-      console.log(status);
 
       //match the input status with the user's status
-      if (status !== user.status.toString()) {
+      if (userStatus !== user.userStatus.toString()) {
         //if no match, Invalid Credentials
         return res
           .status(400)
@@ -71,6 +70,8 @@ router.post(
         //get the payload which includes the user id
         user: {
           id: user.id, //setting the id
+          role: user.role,
+          userStatus: user.userStatus,
         },
       };
 

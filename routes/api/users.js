@@ -13,7 +13,6 @@ const User = require('../../models/User');
 //#1   @route   GET api/users --> "GET" is the request type and "api/users" is the endpoint
 //#2   @desc    Register User --> description of what the route does
 //#3   @access  Public --> access type, whether it's public or private  (if it's private, we need a token for auth...)
-
 router.post(
   '/',
   [
@@ -68,6 +67,8 @@ router.post(
         //get the payload which includes the user id
         user: {
           id: user.id,
+          role: user.role,
+          userStatus: user.userStatus,
         },
       };
 
@@ -81,7 +82,7 @@ router.post(
           if (error) {
             throw error;
           }
-          res.json({ token });
+          res.json({ token, payload });
         }
       ); //change this to 3600 before deploying
     } catch (error) {
@@ -92,5 +93,34 @@ router.post(
     //console.log(req.body); //logging the object of the data to be sent, but we need bodyparser middleware
   }
 );
+
+//#1   @route   GET api/users
+//#2   @desc    Get all users with status of false
+//#3   @access  public
+router.get('/', async (req, res) => {
+  try {
+    const user = await User.find({ userStatus: false });
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+//#1   @route   GET api/users/:user_id
+//#2   @desc    get all users with status of false
+//#3   @access  public
+router.put('/:user_id', async (req, res) => {
+  const { userStatus } = req.body;
+
+  try {
+    const user = await User.findOne({ user: req.params.user_id });
+
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router; //exporting the module
