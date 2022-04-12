@@ -50,11 +50,11 @@ router.post(
       });
 
       await instructor.save(); //save the instructor in the database
+      res.json(instructor);
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server Error');
     }
-    res.json({ status: 'success' });
   }
 );
 

@@ -5,7 +5,7 @@ const router = express.Router(); //importing express router
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
-const Instructor = require('../../models/Course');
+const Course = require('../../models/Course');
 
 //#1   @route   POST api/courses --> "GET" is the request type and "api/courses" is the endpoint
 //#2   @desc    Register Course --> description of what the route does
@@ -42,11 +42,11 @@ router.post(
       });
 
       await course.save(); //save the course in the database
+      res.json(course);
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server Error');
     }
-    res.json({ status: 'success' });
   }
 );
 
