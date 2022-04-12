@@ -72,4 +72,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+//#1   @route   DELETE api/instructors
+//#2   @desc    Delete instructor
+//#3   @access  public
+/*
+router.delete('/', async (req, res) => {
+  try {
+    //Remove user
+    await Instructor.findOneAndRemove({ _id: req.instructor.id });
+
+    res.json({ msg: 'Instructor deleted' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+*/
+
 module.exports = router; //exporting the module

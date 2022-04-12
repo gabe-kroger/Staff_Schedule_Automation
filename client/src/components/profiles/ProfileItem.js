@@ -5,7 +5,7 @@ import { deleteAccount } from '../../actions/profile';
 
 const ProfileItem = ({
   profile: {
-    user: { _id, name, avatar, userStatus },
+    user: { _id, name, avatar, userStatus, role },
     status,
     company,
     location,
@@ -18,12 +18,19 @@ const ProfileItem = ({
       <div>
         <h2>{name}</h2>
         <p>
-          {status} {company && <span> at {company}</span>}
+          {'requesting for'} {role && <span> {role}</span>}
         </p>
-        <p className="my-1">{location && <span>{location}</span>}</p>
-        <Link to={`/profile/${_id}`} className="btn btn-primary">
-          Approve
-        </Link>
+        <p className="my-1">
+          {location && (
+            <span>{'current status is ' + userStatus.toString()}</span>
+          )}
+        </p>
+        <button
+          className="btn btn-primary"
+          onClick={() => console.log(userStatus)}
+        >
+          <i className="fas fa-user-minus" /> Approve
+        </button>
         <button className="btn btn-danger" onClick={() => deleteAccount()}>
           <i className="fas fa-user-minus" /> Deny
         </button>

@@ -8,6 +8,11 @@ import { getProfiles } from '../../actions/profile';
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
     getProfiles();
+    profiles.map((item) => {
+      item.user.userStatus === false
+        ? console.log(item)
+        : console.log('theres nothing');
+    });
   }, [getProfiles]);
 
   return (
@@ -23,9 +28,11 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
           </p>
           <div className="profiles">
             {profiles.length > 0 ? (
-              profiles.map((profile) => (
-                <ProfileItem key={profile._id} profile={profile} />
-              ))
+              profiles.map((profile) =>
+                profile.user.userStatus === false ? (
+                  <ProfileItem key={profile._id} profile={profile} />
+                ) : null
+              )
             ) : (
               <h4>No requests found...</h4>
             )}
