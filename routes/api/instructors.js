@@ -58,4 +58,18 @@ router.post(
   }
 );
 
+//#1   @route   GET api/instructors
+//#2   @desc    get all instructors
+//#3   @access  Public
+
+router.get('/', async (req, res) => {
+  try {
+    const instructor = await Instructor.find();
+    res.json(instructor);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router; //exporting the module

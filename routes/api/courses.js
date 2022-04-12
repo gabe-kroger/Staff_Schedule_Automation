@@ -50,4 +50,18 @@ router.post(
   }
 );
 
+//#1   @route   GET api/courses
+//#2   @desc    get all courses
+//#3   @access  Public
+
+router.get('/', async (req, res) => {
+  try {
+    const course = await Course.find();
+    res.json(course);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router; //exporting the module
