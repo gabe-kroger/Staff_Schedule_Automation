@@ -11,10 +11,10 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <Link to="/profiles">Requests</Link>
       </li>
       <li>
-        <Link to="/posts">Instructors</Link>
+        <Link to="/instructor">Instructors</Link>
       </li>
       <li>
-        <Link to="/courses">Courses</Link>
+        <Link to="/course">Courses</Link>
       </li>
       <li>
         <Link to="/dashboard">
@@ -74,7 +74,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/posts">Settings</Link>
+        <Link to="/settings">Settings</Link>
       </li>
       <li>
         <Link to="/register">Register</Link>

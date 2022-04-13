@@ -46,3 +46,69 @@ export const deleteInstructor = () => async (dispatch) => {
     }
   }
 };
+
+// update instructor by ID from api/instructor/:instructor_id
+export const updateInstructor =
+  (formData, navigate, edit = false) =>
+  async (dispatch) => {
+    try {
+      const res = await api.put('/instructors/:instructor_id', formData);
+
+      dispatch({
+        type: GET_INSTRUCTOR,
+        payload: res.data,
+      });
+
+      dispatch(
+        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
+      );
+
+      if (!edit) {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: INSTRUCTOR_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };
+
+// create new course from api/courses
+export const createInstructor =
+  (formData, navigate, edit = false) =>
+  async (dispatch) => {
+    try {
+      const res = await api.post('/instructors', formData);
+
+      dispatch({
+        type: GET_INSTRUCTOR,
+        payload: res.data,
+      });
+
+      dispatch(
+        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
+      );
+
+      if (!edit) {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: INSTRUCTOR_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };

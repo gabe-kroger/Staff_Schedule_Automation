@@ -10,6 +10,11 @@ import ProfileForm from './components/profile-forms/ProfileForm';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import InstructorForm from './components/instructor-forms/InstructorForm';
+import CourseForm from './components/course-forms/CourseForm';
+import Courses from './components/courses/Courses';
+import Instructors from './components/instructors/Instructors';
+
 //import Profiles from './components/profiles/Profiles';
 //import Profile from './components/profile/Profile';
 //import Posts from './components/posts/Posts';
@@ -75,6 +80,27 @@ const App = () => {
           <Route
             path="add-education"
             element={<PrivateRoute component={AddEducation} />}
+          />
+          <Route
+            path="instructor"
+            element={<PrivateRoute component={Instructors} />}
+          />
+          <Route
+            path="add-instructor"
+            element={<PrivateRoute component={InstructorForm} />}
+          />
+          <Route
+            path="edit-instructor"
+            element={<PrivateRoute component={InstructorForm} />}
+          />
+          <Route path="course" element={<PrivateRoute component={Courses} />} />
+          <Route
+            path="add-course"
+            element={<PrivateRoute component={CourseForm} />}
+          />
+          <Route
+            path="edit-course"
+            element={<PrivateRoute component={CourseForm} />}
           />
         </Routes>
       </Router>
