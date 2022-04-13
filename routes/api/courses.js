@@ -67,11 +67,11 @@ router.get('/', async (req, res) => {
 //#1   @route   DELETE api/courses
 //#2   @desc    Delete course
 //#3   @access  public
-/*
-router.delete('/', async (req, res) => {
+
+router.delete('/:course_id', async (req, res) => {
   try {
     //Remove user
-    await Course.findOneAndRemove({ _id: req.course.id });
+    await Course.findOneAndRemove({ _id: req.params.course_id });
 
     res.json({ msg: 'Course deleted' });
   } catch (error) {
@@ -79,6 +79,24 @@ router.delete('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-*/
+
+//#1   @route   PUT api/courses/:course_id
+//#2   @desc    update instructor by id
+//#3   @access  public
+router.put('/:course_id', async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(
+      { _id: req.params.course_id },
+      req.body,
+      { new: true }
+    );
+
+    course.save();
+    res.json(course);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router; //exporting the module

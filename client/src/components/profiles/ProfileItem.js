@@ -18,11 +18,11 @@ const ProfileItem = ({
       <div>
         <h2>{name}</h2>
         <p>
-          {'requesting for'} {role && <span> {role}</span>}
+          {'Requesting for'} {role && <span> {role}</span>}
         </p>
         <p className="my-1">
           {location && (
-            <span>{'current status is ' + userStatus.toString()}</span>
+            <span>{'Current status is ' + userStatus.toString()}</span>
           )}
         </p>
         <button

@@ -75,11 +75,11 @@ router.get('/', async (req, res) => {
 //#1   @route   DELETE api/instructors
 //#2   @desc    Delete instructor
 //#3   @access  public
-/*
-router.delete('/', async (req, res) => {
+
+router.delete('/:instructor_id', async (req, res) => {
   try {
     //Remove user
-    await Instructor.findOneAndRemove({ _id: req.instructor.id });
+    await Instructor.findOneAndRemove({ _id: req.params.instructor_id });
 
     res.json({ msg: 'Instructor deleted' });
   } catch (error) {
@@ -87,6 +87,24 @@ router.delete('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-*/
+
+//#1   @route   PUT api/instructors/:instructor_id
+//#2   @desc    update instructor by id
+//#3   @access  public
+router.put('/:instructor_id', async (req, res) => {
+  try {
+    const instructor = await Instructor.findByIdAndUpdate(
+      { _id: req.params.instructor_id },
+      req.body,
+      { new: true }
+    );
+
+    instructor.save();
+    res.json(instructor);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router; //exporting the module
