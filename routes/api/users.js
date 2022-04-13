@@ -107,15 +107,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-//#1   @route   GET api/users/:user_id
-//#2   @desc    get all users with status of false
+//#1   @route   PUT api/users/:user_id
+//#2   @desc    update user by id
 //#3   @access  public
 router.put('/:user_id', async (req, res) => {
-  const { userStatus } = req.body;
-
   try {
-    const user = await User.findOne({ user: req.params.user_id });
+    const user = await User.findByIdAndUpdate(
+      { _id: req.params.user_id },
+      req.body,
+      { new: true }
+    );
 
+    user.save();
     res.json(user);
   } catch (error) {
     console.error(error.message);
