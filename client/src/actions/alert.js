@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'; //importing uuid as v4 (which is old).
 import { SET_ALERT } from './types';
 import { REMOVE_ALERT } from './types';
 
-//we want to dispatch more than one action type, and we can double arrow function because of thunk.
+//this is our action called setAlert that will dispatch a type of SET_ALERT and pass in a payload with a msg, alertType and id. We're also going to dispatch a type of REMOVE_ALERT after 5 seconds and pass in a payload of id.
 export const setAlert =
   (msg, alertType, timeout = 5000) =>
   (dispatch) => {

@@ -4,10 +4,14 @@ import alert from './alert';
 import auth from './auth';
 import profile from './profile';
 import post from './post';
+import course from './course';
+import instructor from './instructor';
 
 export default combineReducers({
   alert,
   auth,
   profile,
   post,
+  course,
+  instructor,
 });
