@@ -2,6 +2,7 @@
 import { REMOVE_ALERT, SET_ALERT } from '../actions/types';
 
 // we'll store an array of objects with an id, message, and alertType that communicates a success/failed login
+//just in case the reducer has never been called before, we want to set our undefined state to an empty array
 const initialState = [];
 
 export default function (state = initialState, action) {
