@@ -16,7 +16,7 @@ function instructorReducer(state = initialState, action) {
 
   switch (type) {
     case GET_INSTRUCTOR: //this is adding an alert to an array
-      return [state];
+      return [...state, payload];
     case CREATE_INSTRUCTOR_SUCCESS: //this is adding an alert to an array
       return [...state, payload];
     case INSTRUCTOR_DELETED: //we're removing an alert by its id

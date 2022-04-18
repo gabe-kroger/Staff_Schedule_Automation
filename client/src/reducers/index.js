@@ -7,6 +7,7 @@ import post from './post';
 import course from './course';
 import instructor from './instructor';
 
+//This is all of our state. We can pull from this state by using connect() and passing in mapStateToProps();
 export default combineReducers({
   alert,
   auth,
