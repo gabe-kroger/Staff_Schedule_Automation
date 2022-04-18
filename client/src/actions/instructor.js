@@ -1,6 +1,12 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_INSTRUCTOR, INSTRUCTOR_DELETED, INSTRUCTOR_ERROR } from './types';
+import {
+  GET_INSTRUCTOR,
+  INSTRUCTOR_DELETED,
+  INSTRUCTOR_ERROR,
+  CREATE_INSTRUCTOR_FAIL,
+  CREATE_INSTRUCTOR_SUCCESS,
+} from './types';
 
 /*
   NOTE: we don't need a config object for axios as the
@@ -88,7 +94,7 @@ export const createInstructor =
       const res = await api.post('/instructors', formData);
 
       dispatch({
-        type: GET_INSTRUCTOR,
+        type: CREATE_INSTRUCTOR_SUCCESS,
         payload: res.data,
       });
 
@@ -107,7 +113,7 @@ export const createInstructor =
       }
 
       dispatch({
-        type: INSTRUCTOR_ERROR,
+        type: CREATE_INSTRUCTOR_FAIL,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
