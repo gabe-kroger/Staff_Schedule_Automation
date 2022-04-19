@@ -5,10 +5,22 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 
-const Courses = ({ getInstructors, instructor }) => {
+const Courses = ({ course }) => {
   useEffect(() => {
     console.log('hello world');
   }, []);
+
+  const displayCourse = () => {
+    return (
+      <div>
+        {course.map((item) => (
+          <div>
+            <p>{item.courseTitle}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section className="container">
@@ -24,15 +36,13 @@ const Courses = ({ getInstructors, instructor }) => {
   );
 };
 
-/*
-Instructors.propTypes = {
-  instructor: PropTypes.array.isRequired,
-  getInstructors: PropTypes.func.isRequired,
+Courses.propTypes = {
+  course: PropTypes.array.isRequired,
+  // getCourse: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  instructor: state.instructor,
+  course: state.course,
 });
-*/
 
-export default connect()(Courses);
+export default connect(mapStateToProps)(Courses);

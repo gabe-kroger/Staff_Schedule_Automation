@@ -4,16 +4,27 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import InstructorItem from './InstructorItem';
 import { getInstructors } from '../../actions/instructor';
 
 const Instructors = ({ getInstructors, instructor }) => {
   useEffect(() => {
     getInstructors();
     instructor.map((item) => {
-      console.log(item.name);
+      console.log(item);
     });
-  }, []);
+  }, [getInstructors]);
+
+  const displayInstructor = () => {
+    return (
+      <div>
+        {instructor[0].map((item) => (
+          <div>
+            <p>{item.lastName}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section className="container">
@@ -23,15 +34,8 @@ const Instructors = ({ getInstructors, instructor }) => {
           <i className="fab fa-connectdevelop" /> This is the list of all
           instructors
         </p>
-        <div className="profiles">
-          {instructor.length > 0 ? (
-            instructor.map((item, index) => (
-              <InstructorItem key={item.index} profile={item} />
-            ))
-          ) : (
-            <h4>No requests found...</h4>
-          )}
-        </div>
+        <div className="profiles">my instructors</div>
+        <div>{displayInstructor()}</div>
       </Fragment>
     </section>
   );
