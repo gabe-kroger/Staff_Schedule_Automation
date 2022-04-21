@@ -6,7 +6,10 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getInstructors } from '../../actions/instructor';
 
-const Instructors = ({ getInstructors, instructor }) => {
+const Instructors = ({
+  getInstructors,
+  instructor: { instructor, loading },
+}) => {
   useEffect(() => {
     getInstructors();
     instructor.map((item) => {
@@ -47,7 +50,7 @@ Instructors.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  instructor: state.instructor,
+  instructor: state.instructor, //this is our combined instructor reducer (aka our state)
 });
 
 export default connect(mapStateToProps, { getInstructors })(Instructors);

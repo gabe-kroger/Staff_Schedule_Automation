@@ -1,6 +1,12 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_COURSE, COURSE_ERROR, COURSE_DELETED } from './types';
+import {
+  GET_COURSE,
+  COURSE_ERROR,
+  COURSE_DELETED,
+  CREATE_COURSE_FAIL,
+  CREATE_COURSE_SUCCESS,
+} from './types';
 
 /*
   NOTE: we don't need a config object for axios as the
