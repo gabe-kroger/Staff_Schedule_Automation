@@ -7,12 +7,16 @@ import { getProfiles } from '../../actions/profile';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
-    getProfiles();
-    profiles.map((item) => {
-      item.user.userStatus === false
-        ? console.log(item)
-        : console.log('theres nothing');
-    });
+    getProfiles(); //loading the profiles from the server
+
+    //mapping though the loaded profiles
+    if (loading === false) {
+      profiles.map((item) => {
+        item.user.userStatus === false
+          ? console.log(item)
+          : console.log('theres nothing');
+      });
+    }
   }, [getProfiles]);
 
   return (

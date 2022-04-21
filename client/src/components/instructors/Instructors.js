@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getInstructors } from '../../actions/instructor';
+import InstructorItem from './InstructorItem';
 
 const Instructors = ({
   getInstructors,
@@ -12,17 +13,15 @@ const Instructors = ({
 }) => {
   useEffect(() => {
     getInstructors();
-    instructor.map((item) => {
-      console.log(item);
-    });
+    loading === false && console.log(instructor);
   }, [getInstructors]);
 
   const displayInstructor = () => {
     return (
       <div>
-        {instructor[0].map((item) => (
+        {instructor.map((item) => (
           <div>
-            <p>{item.lastName}</p>
+            <p key={item.lastName}>{item.lastName}</p>
           </div>
         ))}
       </div>
@@ -31,21 +30,31 @@ const Instructors = ({
 
   return (
     <section className="container">
-      <Fragment>
-        <h1 className="large text-primary">Instructors</h1>
-        <p className="lead">
-          <i className="fab fa-connectdevelop" /> This is the list of all
-          instructors
-        </p>
-        <div className="profiles">my instructors</div>
-        <div>{displayInstructor()}</div>
-      </Fragment>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <h1 className="large text-primary">Instructors</h1>
+          <p className="lead">
+            <i className="fab fa-connectdevelop" /> List of instructors
+          </p>
+          <div className="profiles">
+            {instructor.length > 0 ? (
+              instructor.map((item) => (
+                <InstructorItem key={item._id} instructor={item} />
+              ))
+            ) : (
+              <h4>No requests found...</h4>
+            )}
+          </div>
+        </Fragment>
+      )}
     </section>
   );
 };
 
 Instructors.propTypes = {
-  instructor: PropTypes.array.isRequired,
+  instructor: PropTypes.object.isRequired,
   getInstructors: PropTypes.func.isRequired,
 };
 
@@ -54,3 +63,17 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getInstructors })(Instructors);
+
+/*
+  instructor.map((item) => {
+      console.log(item);
+    });
+
+
+
+
+  
+
+
+
+*/

@@ -1,21 +1,24 @@
-//This is the Instructor component which will display of all instructors in the database
+//This is the course component which will display of all Courses in the database
 
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
+import { getCourses } from '../../actions/course';
+import CourseItem from './CourseItem';
 
-const Courses = ({ course }) => {
+const Courses = ({ getCourses, course: { course, loading } }) => {
   useEffect(() => {
-    console.log('hello world');
-  }, []);
+    getCourses();
+    loading === false && console.log(course);
+  }, [getCourses]);
 
   const displayCourse = () => {
     return (
       <div>
         {course.map((item) => (
           <div>
-            <p>{item.courseTitle}</p>
+            <p key={item.lastName}>{item.lastName}</p>
           </div>
         ))}
       </div>
@@ -24,25 +27,48 @@ const Courses = ({ course }) => {
 
   return (
     <section className="container">
-      <Fragment>
-        <h1 className="large text-primary">Classes</h1>
-        <p className="lead">
-          <i className="fab fa-connectdevelop" /> This is the list of all
-          classes
-        </p>
-        <div className="profiles">my classes</div>
-      </Fragment>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <h1 className="large text-primary">Courses</h1>
+          <p className="lead">
+            <i className="fab fa-connectdevelop" /> List of Courses
+          </p>
+          <div className="profiles">
+            {course.length > 0 ? (
+              course.map((item) => <CourseItem key={item._id} course={item} />)
+            ) : (
+              <h4>No requests found...</h4>
+            )}
+          </div>
+        </Fragment>
+      )}
     </section>
   );
 };
 
 Courses.propTypes = {
-  course: PropTypes.array.isRequired,
-  // getCourse: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
+  getCourses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  course: state.course,
+  course: state.course, //this is our combined course reducer (aka our state)
 });
 
-export default connect(mapStateToProps)(Courses);
+export default connect(mapStateToProps, { getCourses })(Courses);
+
+/*
+  course.map((item) => {
+      console.log(item);
+    });
+
+
+
+
+  
+
+
+
+*/
