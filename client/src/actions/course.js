@@ -39,11 +39,11 @@ export const createCourse =
       const res = await api.post('/courses', formData);
 
       dispatch({
-        type: GET_COURSE,
+        type: CREATE_COURSE_SUCCESS,
         payload: res.data,
       });
 
-      dispatch(setAlert(edit ? 'Course Updated' : 'Course Created', 'success'));
+      dispatch(setAlert(edit ? 'Course Added' : 'Course Created', 'success'));
 
       if (!edit) {
         navigate('/dashboard');
@@ -56,7 +56,7 @@ export const createCourse =
       }
 
       dispatch({
-        type: COURSE_ERROR,
+        type: CREATE_COURSE_FAIL,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }

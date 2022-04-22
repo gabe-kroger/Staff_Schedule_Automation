@@ -31,7 +31,7 @@ export const getInstructors = () => async (dispatch) => {
   }
 };
 
-// create new course from api/courses
+// create new instructor from api/instructors
 export const createInstructor =
   (formData, navigate, edit = false) =>
   async (dispatch) => {
@@ -44,7 +44,7 @@ export const createInstructor =
       });
 
       dispatch(
-        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
+        setAlert(edit ? 'Instructor Added' : 'Instructor Created', 'success')
       );
 
       if (!edit) {
