@@ -1,5 +1,5 @@
 //what do i need as far as instructor reducer functions??
-import { GET_USER } from '../actions/types';
+import { GET_USER, USER_ERROR, USER_DELETED } from '../actions/types';
 
 // we'll store an array of objects with an id, message, and alertType that communicates a success/failed login
 const initialState = {
@@ -17,6 +17,11 @@ function userReducer(state = initialState, action) {
         ...state,
         users: payload,
         loading: false,
+      };
+    case USER_DELETED:
+      return {
+        ...state,
+        users: payload,
       };
 
     default:

@@ -1,10 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deleteInstructor } from '../../actions/instructor';
 
 const InstructorItem = ({
-  instructor: { lastName, maxClasses, assignedClasses, disciplines },
+  instructor: { lastName, maxClasses, assignedClasses, disciplines, _id },
+  deleteInstructor,
 }) => {
+  const reloadAfterDelete = (id) => {
+    deleteInstructor(id);
+    return window.location.reload();
+  };
+
   return (
     <div className="profile bg-light">
       <img alt="" className="round-img" />
@@ -22,7 +30,7 @@ const InstructorItem = ({
         </button>
         <button
           className="btn btn-danger"
-          onClick={() => console.log('Delete')}
+          onClick={() => reloadAfterDelete(_id)}
         >
           <i className="fas fa-user-minus" /> Delete
         </button>
@@ -42,4 +50,4 @@ InstructorItem.propTypes = {
   instructor: PropTypes.object.isRequired,
 };
 
-export default InstructorItem;
+export default connect(null, { deleteInstructor })(InstructorItem);

@@ -31,27 +31,38 @@ export const getInstructors = () => async (dispatch) => {
   }
 };
 
-// Delete instructor from api/instructors
-export const deleteInstructor = () => async (dispatch) => {
-  if (
-    window.confirm(
-      'Are you sure you want to delete this instructor? This can NOT be undone!'
-    )
-  ) {
+// create new course from api/courses
+export const createInstructor =
+  (formData, navigate, edit = false) =>
+  async (dispatch) => {
     try {
-      await api.delete('/instructors');
+      const res = await api.post('/instructors', formData);
 
-      dispatch({ type: INSTRUCTOR_DELETED });
-
-      dispatch(setAlert('This instructor has been permanently deleted'));
-    } catch (err) {
       dispatch({
-        type: INSTRUCTOR_ERROR,
+        type: CREATE_INSTRUCTOR_SUCCESS,
+        payload: res.data,
+      });
+
+      dispatch(
+        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
+      );
+
+      if (!edit) {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: CREATE_INSTRUCTOR_FAIL,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
-  }
-};
+  };
 
 // update instructor by ID from api/instructor/:instructor_id
 export const updateInstructor =
@@ -86,35 +97,24 @@ export const updateInstructor =
     }
   };
 
-// create new course from api/courses
-export const createInstructor =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
+// Delete instructor from api/instructors
+export const deleteInstructor = (id) => async (dispatch) => {
+  if (
+    window.confirm(
+      'Are you sure you want to delete this instructor? This can NOT be undone!'
+    )
+  ) {
     try {
-      const res = await api.post('/instructors', formData);
+      await api.delete(`instructors/${id}`);
 
-      dispatch({
-        type: CREATE_INSTRUCTOR_SUCCESS,
-        payload: res.data,
-      });
+      dispatch({ type: INSTRUCTOR_DELETED });
 
-      dispatch(
-        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
-      );
-
-      if (!edit) {
-        navigate('/dashboard');
-      }
+      dispatch(setAlert('This instructor has been permanently deleted'));
     } catch (err) {
-      const errors = err.response.data.errors;
-
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-      }
-
       dispatch({
-        type: CREATE_INSTRUCTOR_FAIL,
+        type: INSTRUCTOR_ERROR,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
-  };
+  }
+};

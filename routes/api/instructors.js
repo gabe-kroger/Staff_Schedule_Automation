@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-//#1   @route   DELETE api/instructors
+//#1   @route   DELETE api/instructors/:instructor_id
 //#2   @desc    Delete instructor
 //#3   @access  public
 

@@ -31,27 +31,36 @@ export const getCourses = () => async (dispatch) => {
   }
 };
 
-// delete course from api/courses
-export const deleteCourse = () => async (dispatch) => {
-  if (
-    window.confirm(
-      'Are you sure you want to delete this course? This can NOT be undone!'
-    )
-  ) {
+// create new course from api/courses
+export const createCourse =
+  (formData, navigate, edit = false) =>
+  async (dispatch) => {
     try {
-      await api.delete('/courses');
+      const res = await api.post('/courses', formData);
 
-      dispatch({ type: COURSE_DELETED });
+      dispatch({
+        type: GET_COURSE,
+        payload: res.data,
+      });
 
-      dispatch(setAlert('This course has been permanently deleted'));
+      dispatch(setAlert(edit ? 'Course Updated' : 'Course Created', 'success'));
+
+      if (!edit) {
+        navigate('/dashboard');
+      }
     } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
       dispatch({
         type: COURSE_ERROR,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
-  }
-};
+  };
 
 // update course by ID from api/courses/:course_id
 export const updateCourse =
@@ -84,33 +93,24 @@ export const updateCourse =
     }
   };
 
-// create new course from api/courses
-export const createCourse =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
+// delete course from api/courses
+export const deleteCourse = (id) => async (dispatch) => {
+  if (
+    window.confirm(
+      'Are you sure you want to delete this course? This can NOT be undone!'
+    )
+  ) {
     try {
-      const res = await api.post('/courses', formData);
+      await api.delete(`courses/${id}`);
 
-      dispatch({
-        type: GET_COURSE,
-        payload: res.data,
-      });
+      dispatch({ type: COURSE_DELETED });
 
-      dispatch(setAlert(edit ? 'Course Updated' : 'Course Created', 'success'));
-
-      if (!edit) {
-        navigate('/dashboard');
-      }
+      dispatch(setAlert('This course has been permanently deleted'));
     } catch (err) {
-      const errors = err.response.data.errors;
-
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-      }
-
       dispatch({
         type: COURSE_ERROR,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
-  };
+  }
+};

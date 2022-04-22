@@ -33,6 +33,10 @@ function courseReducer(state = initialState, action) {
         loading: false,
       };
     case COURSE_DELETED: //we're removing an alert by its id
+      return {
+        ...state,
+        course: payload,
+      };
     case CREATE_COURSE_FAIL:
       return {
         ...state,

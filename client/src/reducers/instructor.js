@@ -33,6 +33,10 @@ function instructorReducer(state = initialState, action) {
         loading: false,
       };
     case INSTRUCTOR_DELETED: //we're removing an alert by its id
+      return {
+        ...state,
+        instructor: payload,
+      };
     case CREATE_INSTRUCTOR_FAIL:
       return {
         ...state,

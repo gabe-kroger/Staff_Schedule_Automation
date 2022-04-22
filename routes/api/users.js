@@ -126,4 +126,20 @@ router.put('/:user_id', async (req, res) => {
   }
 });
 
+//#1   @route   DELETE api/instructors/:instructor_id
+//#2   @desc    Delete instructor
+//#3   @access  public
+
+router.delete('/:user_id', async (req, res) => {
+  try {
+    //Remove user
+    await User.findOneAndRemove({ _id: req.params.user_id });
+
+    res.json({ msg: 'Instructor deleted' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router; //exporting the module
