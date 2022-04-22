@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCourses } from '../../actions/course';
 import CourseItem from './CourseItem';
+import { Link } from 'react-router-dom';
 
 const Courses = ({ getCourses, course: { course, loading } }) => {
   useEffect(() => {
@@ -35,6 +36,12 @@ const Courses = ({ getCourses, course: { course, loading } }) => {
           <p className="lead">
             <i className="fab fa-connectdevelop" /> List of Courses
           </p>
+          <Link to="/add-course" className="btn btn-light">
+            <i className="fas fa-graduation-cap text-primary" /> Add Course
+          </Link>
+          <br />
+          <br />
+
           <div className="profiles">
             {course.length > 0 ? (
               course.map((item) => <CourseItem key={item._id} course={item} />)

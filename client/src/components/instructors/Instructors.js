@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getInstructors } from '../../actions/instructor';
 import InstructorItem from './InstructorItem';
+import { Link } from 'react-router-dom';
 
 const Instructors = ({
   getInstructors,
@@ -38,6 +39,11 @@ const Instructors = ({
           <p className="lead">
             <i className="fab fa-connectdevelop" /> List of instructors
           </p>
+          <Link to="/add-instructor" className="btn btn-light">
+            <i className="fab fa-black-tie text-primary" /> Add Instructor
+          </Link>
+          <br />
+          <br />
           <div className="profiles">
             {instructor.length > 0 ? (
               instructor.map((item) => (

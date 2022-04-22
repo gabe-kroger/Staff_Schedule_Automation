@@ -27,11 +27,14 @@ const ProfileItem = ({
         </p>
         <button
           className="btn btn-primary"
-          onClick={() => console.log(userStatus)}
+          onClick={() => console.log('approve')}
         >
           <i className="fas fa-user-minus" /> Approve
         </button>
-        <button className="btn btn-danger" onClick={() => deleteAccount()}>
+        <button
+          className="btn btn-danger"
+          onClick={() => console.log('delete')}
+        >
           <i className="fas fa-user-minus" /> Deny
         </button>
       </div>
