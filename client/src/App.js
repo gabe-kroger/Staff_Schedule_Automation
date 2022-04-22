@@ -10,6 +10,7 @@ import ProfileForm from './components/profile-forms/ProfileForm';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Users from './components/users/Users';
 import InstructorForm from './components/instructor-forms/InstructorForm';
 import CourseForm from './components/course-forms/CourseForm';
 import Courses from './components/courses/Courses';
@@ -61,10 +62,7 @@ const App = () => {
             path="dashboard"
             element={<PrivateRoute component={Dashboard} />}
           />
-          <Route
-            path="profiles"
-            element={<PrivateRoute component={Profiles} />}
-          />
+          <Route path="users" element={<PrivateRoute component={Users} />} />
           <Route
             path="create-profile"
             element={<PrivateRoute component={ProfileForm} />}

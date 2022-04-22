@@ -15,7 +15,7 @@ function userReducer(state = initialState, action) {
     case GET_USER: //this is adding an alert to an array
       return {
         ...state,
-        instructor: payload,
+        users: payload,
         loading: false,
       };
 
