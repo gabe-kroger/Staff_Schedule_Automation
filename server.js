@@ -13,6 +13,7 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/instructors', require('./routes/api/instructors'));
 app.use('/api/courses', require('./routes/api/courses'));
+app.use('/api/schedule', require('./routes/api/schedule'));
 
 const PORT = process.env.port || 5000;
 
