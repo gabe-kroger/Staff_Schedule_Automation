@@ -4,8 +4,10 @@ import {
   GET_COURSE,
   COURSE_ERROR,
   COURSE_DELETED,
+  COURSE_SELECTED,
   CREATE_COURSE_FAIL,
   CREATE_COURSE_SUCCESS,
+  COURSE_UPDATED,
 } from './types';
 
 /*
@@ -32,66 +34,58 @@ export const getCourses = () => async (dispatch) => {
 };
 
 // create new course from api/courses
-export const createCourse =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
-    try {
-      const res = await api.post('/courses', formData);
+export const createCourse = (formData, navigate) => async (dispatch) => {
+  try {
+    const res = await api.post('/courses', formData);
 
-      dispatch({
-        type: CREATE_COURSE_SUCCESS,
-        payload: res.data,
-      });
+    dispatch({
+      type: CREATE_COURSE_SUCCESS,
+      payload: res.data,
+    });
 
-      dispatch(setAlert(edit ? 'Course Added' : 'Course Created', 'success'));
+    dispatch(setAlert('Course Created', 'success'));
 
-      if (!edit) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      const errors = err.response.data.errors;
+    navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
 
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-      }
-
-      dispatch({
-        type: CREATE_COURSE_FAIL,
-        payload: { msg: err.response.statusText, status: err.response.status },
-      });
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
-  };
 
-// update course by ID from api/courses/:course_id
-export const updateCourse =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
-    try {
-      const res = await api.put('/courses/:course_id', formData);
+    dispatch({
+      type: CREATE_COURSE_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
-      dispatch({
-        type: GET_COURSE,
-        payload: res.data,
-      });
+// update course by ID from api/course/:course_id
+export const updateCourse = (id, formData, navigate) => async (dispatch) => {
+  try {
+    const res = await api.put(`/courses/${id}`, formData);
 
-      dispatch(setAlert(edit ? 'Course Updated' : 'Course Created', 'success'));
+    dispatch({
+      type: COURSE_UPDATED,
+      payload: res.data,
+    });
 
-      if (!edit) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      const errors = err.response.data.errors;
+    dispatch(setAlert('Course Edited', 'success'));
 
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-      }
+    navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
 
-      dispatch({
-        type: COURSE_ERROR,
-        payload: { msg: err.response.statusText, status: err.response.status },
-      });
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
-  };
+
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // delete course from api/courses
 export const deleteCourse = (id) => async (dispatch) => {
@@ -112,5 +106,20 @@ export const deleteCourse = (id) => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
+  }
+};
+
+// Delete course from api/courses
+export const selectedCourse = (courseSelected) => async (dispatch) => {
+  try {
+    dispatch({
+      type: COURSE_SELECTED,
+      payload: courseSelected,
+    });
+  } catch (err) {
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

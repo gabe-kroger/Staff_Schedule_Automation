@@ -47,7 +47,7 @@ const CourseForm = ({
       setFormData(courseData);
     }
     */
-  }, [loading, getCourses, course]);
+  }, [getCourses]);
 
   const { courseNumber, courseTitle, disciplines } = formData;
 
@@ -56,7 +56,10 @@ const CourseForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createCourse(formData, navigate, course ? true : false);
+    if (courseNumber !== '' && courseTitle !== '' && disciplines !== '') {
+      createCourse(formData, navigate);
+    }
+    getCourses();
   };
 
   return (
@@ -65,14 +68,10 @@ const CourseForm = ({
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className="large text-primary">
-            {creatingCourse ? 'Create Course' : 'Edit Course'}
-          </h1>
+          <h1 className="large text-primary">Create Course</h1>
           <p className="lead">
             <i className="fas fa-user" />
-            {creatingCourse
-              ? ` Let's get some information to make a course`
-              : ' Add some changes to an existing course'}
+            Let's get some information to make a course
           </p>
           <small>* = required field</small>
           <form className="form" onSubmit={onSubmit}>

@@ -5,6 +5,8 @@ import {
   GET_COURSE,
   COURSE_DELETED,
   COURSE_ERROR,
+  COURSE_SELECTED,
+  COURSE_UPDATED,
   REMOVE_ALERT,
   SET_ALERT,
 } from '../actions/types';
@@ -14,6 +16,7 @@ const initialState = {
   course: [],
   loading: true,
   error: {},
+  courseSelected: null,
 };
 
 function courseReducer(state = initialState, action) {
@@ -38,8 +41,14 @@ function courseReducer(state = initialState, action) {
         course: payload,
       };
     case CREATE_COURSE_FAIL:
+    case COURSE_UPDATED:
       return {
         ...state,
+      };
+    case COURSE_SELECTED:
+      return {
+        ...state,
+        courseSelected: payload,
       };
     case COURSE_ERROR:
       return {
