@@ -6,6 +6,8 @@ import {
   INSTRUCTOR_ERROR,
   CREATE_INSTRUCTOR_FAIL,
   CREATE_INSTRUCTOR_SUCCESS,
+  INSTRUCTOR_SELECTED,
+  INSTRUCTOR_UPDATED,
 } from './types';
 
 /*
@@ -32,57 +34,46 @@ export const getInstructors = () => async (dispatch) => {
 };
 
 // create new instructor from api/instructors
-export const createInstructor =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
-    try {
-      const res = await api.post('/instructors', formData);
+export const createInstructor = (formData, navigate) => async (dispatch) => {
+  try {
+    const res = await api.post('/instructors', formData);
 
-      dispatch({
-        type: CREATE_INSTRUCTOR_SUCCESS,
-        payload: res.data,
-      });
+    dispatch({
+      type: CREATE_INSTRUCTOR_SUCCESS,
+      payload: res.data,
+    });
 
-      dispatch(
-        setAlert(edit ? 'Instructor Added' : 'Instructor Created', 'success')
-      );
+    dispatch(setAlert('Instructor Created', 'success'));
 
-      if (!edit) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      const errors = err.response.data.errors;
+    navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
 
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-      }
-
-      dispatch({
-        type: CREATE_INSTRUCTOR_FAIL,
-        payload: { msg: err.response.statusText, status: err.response.status },
-      });
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
-  };
+
+    dispatch({
+      type: CREATE_INSTRUCTOR_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // update instructor by ID from api/instructor/:instructor_id
 export const updateInstructor =
-  (formData, navigate, edit = false) =>
-  async (dispatch) => {
+  (id, formData, navigate) => async (dispatch) => {
     try {
-      const res = await api.put('/instructors/:instructor_id', formData);
+      const res = await api.put(`/instructors/${id}`, formData);
 
       dispatch({
-        type: GET_INSTRUCTOR,
+        type: INSTRUCTOR_UPDATED,
         payload: res.data,
       });
 
-      dispatch(
-        setAlert(edit ? 'Instructor Updated' : 'Instructor Created', 'success')
-      );
+      dispatch(setAlert('Instructor Edited', 'success'));
 
-      if (!edit) {
-        navigate('/dashboard');
-      }
+      navigate('/dashboard');
     } catch (err) {
       const errors = err.response.data.errors;
 
@@ -116,5 +107,20 @@ export const deleteInstructor = (id) => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
+  }
+};
+
+// Delete instructor from api/instructors
+export const selectedInstructor = (instructorSelected) => async (dispatch) => {
+  try {
+    dispatch({
+      type: INSTRUCTOR_SELECTED,
+      payload: instructorSelected,
+    });
+  } catch (err) {
+    dispatch({
+      type: INSTRUCTOR_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

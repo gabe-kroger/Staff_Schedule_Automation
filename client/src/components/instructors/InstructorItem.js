@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteInstructor } from '../../actions/instructor';
+import { deleteInstructor, selectedInstructor } from '../../actions/instructor';
 
 const InstructorItem = ({
-  instructor: { lastName, maxClasses, assignedClasses, disciplines, _id },
+  instructor,
   deleteInstructor,
+  selectedInstructor,
 }) => {
   const reloadAfterDelete = (id) => {
     deleteInstructor(id);
@@ -18,25 +19,31 @@ const InstructorItem = ({
       <img alt="" className="round-img" />
 
       <div>
-        <h2>{lastName}</h2>
+        <h2>{instructor.lastName}</h2>
         <p>
-          {'Max Classes:'} {maxClasses && <span> {maxClasses}</span>}
+          {'Max Classes:'}{' '}
+          {instructor.maxClasses && <span> {instructor.maxClasses}</span>}
         </p>
         <p className="my-1">
-          {<span>{'Assigned Classes: ' + assignedClasses}</span>}
+          {<span>{'Assigned Classes: ' + instructor.assignedClasses}</span>}
         </p>
-        <button className="btn btn-primary" onClick={() => console.log('Edit')}>
-          <i className="fas fa-user-minus" /> Edit
-        </button>
+        <Link to="/edit-instructor">
+          <button
+            className="btn btn-primary"
+            onClick={() => selectedInstructor(instructor)}
+          >
+            <i className="fas fa-user-minus" /> Edit
+          </button>
+        </Link>
         <button
           className="btn btn-danger"
-          onClick={() => reloadAfterDelete(_id)}
+          onClick={() => reloadAfterDelete(instructor._id)}
         >
           <i className="fas fa-user-minus" /> Delete
         </button>
       </div>
       <ul>
-        {disciplines.slice(0, 4).map((discipline, index) => (
+        {instructor.disciplines.slice(0, 4).map((discipline, index) => (
           <li key={index} className="text-primary">
             <i className="fas fa-check" /> {discipline}
           </li>
@@ -50,4 +57,6 @@ InstructorItem.propTypes = {
   instructor: PropTypes.object.isRequired,
 };
 
-export default connect(null, { deleteInstructor })(InstructorItem);
+export default connect(null, { deleteInstructor, selectedInstructor })(
+  InstructorItem
+);

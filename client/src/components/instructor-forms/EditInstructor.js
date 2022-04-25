@@ -2,7 +2,11 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getInstructors, createInstructor } from '../../actions/instructor';
+import {
+  getInstructors,
+  updateInstructor,
+  selectedInstructor,
+} from '../../actions/instructor';
 import Spinner from '../layout/Spinner';
 
 /*
@@ -10,20 +14,21 @@ import Spinner from '../layout/Spinner';
   so that it doesn't trigger a useEffect
   we can then safely use this to construct our instructorData
  */
-const initialState = {
-  lastName: '',
-  maxClasses: 1,
-  disciplines: '',
-};
 
 const InstructorForm = ({
-  instructor: { instructor, loading },
-  createInstructor,
+  instructor: { instructor, loading, instructorSelected },
+  updateInstructor,
   getInstructors,
 }) => {
+  const initialState = {
+    lastName: instructorSelected.lastName,
+    maxClasses: instructorSelected.maxClasses,
+    disciplines: instructorSelected.disciplines,
+  };
+
   const [formData, setFormData] = useState(initialState);
 
-  const creatingInstructor = useMatch('/add-instructor');
+  const creatingInstructor = useMatch('/edit-instructor');
 
   const navigate = useNavigate();
 
@@ -62,7 +67,7 @@ const InstructorForm = ({
       disciplines !== '' &&
       maxClasses !== 0
     ) {
-      createInstructor(formData, navigate);
+      updateInstructor(instructorSelected._id, formData, navigate);
     }
     getInstructors();
   };
@@ -73,10 +78,12 @@ const InstructorForm = ({
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className="large text-primary">Create Instructor</h1>
+          <h1 className="large text-primary">
+            {`Edit Instructor ${instructorSelected.lastName}`}
+          </h1>
           <p className="lead">
             <i className="fas fa-user" />
-            Let's get some information to make an instructor
+            {'Lets add some changes to an existing instructor'}
           </p>
           <small>* = required field</small>
           <form className="form" onSubmit={onSubmit}>
@@ -95,12 +102,12 @@ const InstructorForm = ({
             <div className="form-group">
               <input
                 type="text"
-                placeholder="0"
+                placeholder={maxClasses}
                 name="maxClasses"
                 value={maxClasses}
                 onChange={onChange}
               />
-              <small className="form-text">Enter max classes</small>
+              <small className="form-text">Enter max classes (1-4)</small>
             </div>
 
             <div className="form-group">
@@ -129,8 +136,9 @@ const InstructorForm = ({
 };
 
 InstructorForm.propTypes = {
-  createInstructor: PropTypes.func.isRequired,
+  updateInstructor: PropTypes.func.isRequired,
   getInstructors: PropTypes.func.isRequired,
+  selectedInstructor: PropTypes.func.isRequired,
   instructor: PropTypes.object.isRequired,
 };
 
@@ -138,6 +146,8 @@ const mapStateToProps = (state) => ({
   instructor: state.instructor,
 });
 
-export default connect(mapStateToProps, { createInstructor, getInstructors })(
-  InstructorForm
-);
+export default connect(mapStateToProps, {
+  updateInstructor,
+  getInstructors,
+  selectedInstructor,
+})(InstructorForm);

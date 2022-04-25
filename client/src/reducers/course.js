@@ -41,6 +41,11 @@ function courseReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case COURSE_ERROR:
+      return {
+        ...state,
+        error: payload,
+      };
     default:
       return state;
   }
