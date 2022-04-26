@@ -28,7 +28,6 @@ router.post(
   [
     check('email', 'Please include a valid email').isEmail(), //making sure there's an email
     check('password', 'Password is required').exists(), // making sure the password exists
-    check('userStatus', 'Status is required').exists(), // making sure the status exists
   ],
   //checking for errors in the req.body
   async (req, res) => {
@@ -37,7 +36,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { email, password, userStatus } = req.body;
+    const { email, password, userStatus = 'true' } = req.body;
 
     try {
       //see if user exists
@@ -62,7 +61,7 @@ router.post(
         //if no match, Invalid Credentials
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid credentials' }] });
+          .json({ errors: [{ msg: 'User not validated yet' }] });
       }
 
       //return jsonwebtoken

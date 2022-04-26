@@ -29,39 +29,39 @@ const Login = ({ login, isAuthenticated }) => {
 
   //Redirect if logged in
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to='/dashboard' />;
   }
 
   //in the input section, we use the term 'required' to add client-side validation
   return (
     <Fragment>
-      <h1 className="large text-primary">Log In</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Sign Into Your Account
+      <h1 className='large text-primary'>Log In</h1>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Sign Into Your Account
       </p>
-      <form className="form" onSubmit={(event) => onSubmit(event)}>
-        <div className="form-group">
+      <form className='form' onSubmit={(event) => onSubmit(event)}>
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={email}
-            type="email"
-            placeholder="Email Address"
-            name="email"
+            type='email'
+            placeholder='Email Address'
+            name='email'
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={password}
-            type="password"
-            placeholder="Password"
-            name="password"
-            minLength="6"
+            type='password'
+            placeholder='Password'
+            name='password'
+            minLength='6'
             required
           />
         </div>
-        <div className="form-group">
+        {/*         <div className="form-group">
           <input
             onChange={(event) => onChange(event)}
             value={userStatus}
@@ -71,11 +71,11 @@ const Login = ({ login, isAuthenticated }) => {
             maxLength="4"
             required
           />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Login" />
+        </div> */}
+        <input type='submit' className='btn btn-primary' value='Login' />
       </form>
-      <p className="my-1">
-        Don't have an account? <Link to="/register">Sign up</Link>
+      <p className='my-1'>
+        Don't have an account? <Link to='/register'>Sign up</Link>
       </p>
     </Fragment>
   );
