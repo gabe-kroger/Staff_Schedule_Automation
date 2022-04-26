@@ -38,38 +38,38 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   //Redirect if logged in
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to='/dashboard' />;
   }
 
   //in the input section, we use the term 'required' to add client-side validation
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
+      <h1 className='large text-primary'>Sign Up</h1>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Create Your Account
       </p>
-      <form className="form" onSubmit={(event) => onSubmit(event)}>
-        <div className="form-group">
+      <form className='form' onSubmit={(event) => onSubmit(event)}>
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={name}
-            type="text"
-            placeholder="Name"
-            name="name"
+            type='text'
+            placeholder='Name'
+            name='name'
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={email}
-            type="email"
-            placeholder="Email Address"
-            name="email"
+            type='email'
+            placeholder='Email Address'
+            name='email'
             required
           />
         </div>
-        <div className="form-groupp">
+        {/*         <div className="form-groupp">
           <input
             onChange={(event) => onChange(event)}
             value={role}
@@ -78,33 +78,48 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="role"
             required
           />
+        </div> */}
+
+        <div className='form-group'>
+          <select
+            onChange={(event) => onChange(event)}
+            value={role}
+            placeholder='User Role'
+            name='role'
+            required
+          >
+            <option value={'Root'}>Root</option>
+            <option value={'Amdin'}>Admin</option>
+            <option value={'Assistant'}>Assistant</option>
+          </select>
         </div>
-        <div className="form-group">
+
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={password}
-            type="password"
-            placeholder="Password"
-            name="password"
-            minLength="6"
+            type='password'
+            placeholder='Password'
+            name='password'
+            minLength='6'
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
             onChange={(event) => onChange(event)}
             value={password2}
-            type="password"
-            placeholder="Confirm Password"
-            name="password2"
-            minLength="6"
+            type='password'
+            placeholder='Confirm Password'
+            name='password2'
+            minLength='6'
             required
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
+        <input type='submit' className='btn btn-primary' value='Register' />
       </form>
-      <p className="my-1">
-        Already have an account? <Link to="/login">Sign In</Link>
+      <p className='my-1'>
+        Already have an account? <Link to='/login'>Sign In</Link>
       </p>
     </Fragment>
   );

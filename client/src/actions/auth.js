@@ -57,8 +57,8 @@ export const register = (formData) => async (dispatch) => {
 };
 
 // Login User
-export const login = (email, password, userStatus) => async (dispatch) => {
-  const body = { email, password, userStatus };
+export const login = (email, password) => async (dispatch) => {
+  const body = { email, password };
 
   try {
     const res = await api.post('/auth', body);
