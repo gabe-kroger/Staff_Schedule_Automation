@@ -1,71 +1,50 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import { getCurrentProfile } from '../../actions/profile';
 
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const Navbar = ({
+  getCurrentProfile,
+  profile: { profile },
+  auth: { user, isAuthenticated },
+  logout,
+}) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/users">Requests</Link>
+        {user && user.role == 'Root' && <Link to='/users'>Requests</Link>}
       </li>
-      <li>
-        <Link to="/instructor">Instructors</Link>
-      </li>
-      <li>
-        <Link to="/course">Courses</Link>
-      </li>
-      <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
-          <span className="hide-sm">Dashboard</span>
-        </Link>
-      </li>
-      <li>
-        <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{' '}
-          <span className="hide-sm">Logout</span>
-        </a>
-      </li>
-    </ul>
-  );
 
-  const adminLinks = (
-    <ul>
       <li>
-        <Link to="/posts">Settings</Link>
+        {user && user.role == 'Admin' && (
+          <Link to='/instructor'>Instructors</Link>
+        )}
       </li>
       <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
-          <span className="hide-sm">Dashboard</span>
-        </Link>
+        {user && user.role == 'Root' && (
+          <Link to='/instructor'>Instructors</Link>
+        )}
       </li>
-      <li>
-        <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{' '}
-          <span className="hide-sm">Logout</span>
-        </a>
-      </li>
-    </ul>
-  );
 
-  const assistantLinks = (
-    <ul>
       <li>
-        <Link to="/posts">Settings</Link>
+        {user && user.role == 'Admin' && <Link to='/course'>Courses</Link>}
       </li>
       <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
-          <span className="hide-sm">Dashboard</span>
+        {user && user.role == 'Root' && <Link to='/course'>Courses</Link>}
+      </li>
+
+      <li>
+        <Link to='/dashboard'>
+          <i className='fas fa-user' />{' '}
+          <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
       <li>
-        <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{' '}
-          <span className="hide-sm">Logout</span>
+        <a onClick={logout} href='#!'>
+          <i className='fas fa-sign-out-alt' />{' '}
+          <span className='hide-sm'>Logout</span>
         </a>
       </li>
     </ul>
@@ -74,22 +53,22 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/settings">Settings</Link>
+        <Link to='/settings'>Settings</Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to='/register'>Register</Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to='/login'>Login</Link>
       </li>
     </ul>
   );
 
   return (
-    <nav className="navbar bg-dark">
+    <nav className='navbar bg-dark'>
       <h1>
-        <Link to="/">
-          <i className="fas fa-code" /> ADTAA
+        <Link to='/'>
+          <i className='fas fa-code' /> ADTAA
         </Link>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
@@ -98,12 +77,15 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 };
 
 Navbar.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  profile: state.profile,
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, getCurrentProfile })(Navbar);

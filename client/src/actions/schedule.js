@@ -64,7 +64,7 @@ export const updateSchedule =
       const res = await api.put('/schedule/:schedule_id', formData);
 
       dispatch({
-        type: GET_COURSE,
+        type: GET_SCHEDULE,
         payload: res.data,
       });
 
