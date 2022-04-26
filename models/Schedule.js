@@ -5,6 +5,9 @@ const ScheduleSchema = new mongoose.Schema({
   classID: {
     type: Number,
   },
+  crn: {
+    type: String,
+  },
   courseTitle: {
     type: String,
   },

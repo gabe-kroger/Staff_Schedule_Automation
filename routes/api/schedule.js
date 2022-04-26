@@ -20,7 +20,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { classID, courseTitle, instructor, scheduledTime } = req.body;
+    const { classID, crn, courseTitle, instructor, scheduledTime } = req.body;
 
     try {
       //see if course exists
@@ -33,6 +33,7 @@ router.post(
       //this makes a new course instance, but doesn't save it. We need to use course.save();
       schedule = new Schedule({
         classID,
+        crn,
         courseTitle,
         instructor,
         scheduledTime,
@@ -70,7 +71,7 @@ router.delete('/:schedule_id', async (req, res) => {
     //Remove schedules class
     await Schedule.findOneAndRemove({ _id: req.params.schedule_id });
 
-    res.json({ msg: 'Course section deleted' });
+    res.json({ msg: 'Scheduled class deleted' });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
