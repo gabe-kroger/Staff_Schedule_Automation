@@ -11,13 +11,17 @@ import InstructorItemTwo from '../instructors/InstructorItemTwo';
 import Spinner from '../layout/Spinner';
 import { getCourses } from '../../actions/course';
 import CourseItemTwo from '../courses/CourseItemTwo';
+import { getSchedules } from '../../actions/schedule';
+import ScheduleItem from '../schedules/ScheduleItem';
 
 const Dashboard = ({
   getCurrentProfile,
   getInstructors,
   getCourses,
+  getSchedules,
   instructor: { instructor, loading },
   course: { course },
+  schedule: { schedule },
   deleteAccount,
   auth: { user },
   profile: { profile },
@@ -26,27 +30,51 @@ const Dashboard = ({
     getCurrentProfile();
     getInstructors();
     getCourses();
+    getSchedules();
   }, [getCurrentProfile]);
 
   return (
-    <section className="container">
-      <h1 className="large text-primary">Dashboard</h1>
-      <p className="lead">
-        <i className="fas fa-user" /> Welcome {user && user.name}
+    <section className='container'>
+      <h1 className='large text-primary'>Dashboard</h1>
+      <p className='lead'>
+        <i className='fas fa-user' /> Welcome {user && user.name}
       </p>
       {profile !== null ? (
         <>
           <DashboardActions />
-          <section className="container">
+
+          <section className='container'>
+            {schedule.loading ? (
+              <Spinner />
+            ) : (
+              <Fragment>
+                <h1 className='large text-primary'>Schedule</h1>
+                <p className='lead'>
+                  <i className='fab fa-connectdevelop' /> Schedule
+                </p>
+                <div className='profiles'>
+                  {schedule.length > 0 ? (
+                    schedule.map((item) => (
+                      <ScheduleItem key={item._id} schedule={item} />
+                    ))
+                  ) : (
+                    <h4>No requests found...</h4>
+                  )}
+                </div>
+              </Fragment>
+            )}
+          </section>
+
+          <section className='container'>
             {loading ? (
               <Spinner />
             ) : (
               <Fragment>
-                <h1 className="large text-primary">Instructors</h1>
-                <p className="lead">
-                  <i className="fab fa-connectdevelop" /> List of instructors
+                <h1 className='large text-primary'>Instructors</h1>
+                <p className='lead'>
+                  <i className='fab fa-connectdevelop' /> List of instructors
                 </p>
-                <div className="profiles">
+                <div className='profiles'>
                   {instructor.length > 0 ? (
                     instructor.map((item) => (
                       <InstructorItemTwo key={item._id} instructor={item} />
@@ -59,16 +87,16 @@ const Dashboard = ({
             )}
           </section>
 
-          <section className="container">
+          <section className='container'>
             {course.loading ? (
               <Spinner />
             ) : (
               <Fragment>
-                <h1 className="large text-primary">Courses</h1>
-                <p className="lead">
-                  <i className="fab fa-connectdevelop" /> List of Courses
+                <h1 className='large text-primary'>Courses</h1>
+                <p className='lead'>
+                  <i className='fab fa-connectdevelop' /> List of Courses
                 </p>
-                <div className="profiles">
+                <div className='profiles'>
                   {course.length > 0 ? (
                     course.map((item) => (
                       <CourseItemTwo key={item._id} course={item} />
@@ -81,16 +109,16 @@ const Dashboard = ({
             )}
           </section>
 
-          <div className="my-2">
-            <button className="btn btn-danger" onClick={() => deleteAccount()}>
-              <i className="fas fa-user-minus" /> Delete My Account
+          <div className='my-2'>
+            <button className='btn btn-danger' onClick={() => deleteAccount()}>
+              <i className='fas fa-user-minus' /> Delete My Account
             </button>
           </div>
         </>
       ) : (
         <>
           <p>You have not yet setup a profile, please add some info</p>
-          <Link to="/create-profile" className="btn btn-primary my-1">
+          <Link to='/create-profile' className='btn btn-primary my-1'>
             Create Profile
           </Link>
         </>
@@ -103,6 +131,7 @@ Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   getInstructors: PropTypes.func.isRequired,
   getCourses: PropTypes.func.isRequired,
+  getSchedules: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
@@ -113,6 +142,7 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
   instructor: state.instructor,
   course: state.course,
+  schedule: state.schedule,
 });
 
 export default connect(mapStateToProps, {
@@ -120,6 +150,7 @@ export default connect(mapStateToProps, {
   deleteAccount,
   getInstructors,
   getCourses,
+  getSchedules,
 })(Dashboard);
 
 /*  These components go below line 28.  I'll use these for "Add Instructor" and "Add Course"

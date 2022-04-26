@@ -7,6 +7,7 @@ import post from './post';
 import course from './course';
 import instructor from './instructor';
 import users from './users';
+import schedule from './schedule';
 
 //This is all of our state. We can pull from this state by using connect() and passing in mapStateToProps();
 export default combineReducers({
@@ -17,4 +18,5 @@ export default combineReducers({
   course,
   instructor,
   users,
+  schedule,
 });
