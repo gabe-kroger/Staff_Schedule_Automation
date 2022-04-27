@@ -110,3 +110,18 @@ export const deleteSchedule = (id) => async (dispatch) => {
     }
   }
 };
+
+// generate schedule
+export const generateSchedule = () => async (dispatch) => {
+  try {
+    const res = await api.post(`schedule/generate`);
+    dispatch({
+      payload: { msg: 'generatign schedule' },
+    });
+    dispatch(setAlert('Generating schedule'));
+  } catch (err) {
+    dispatch({
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

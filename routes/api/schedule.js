@@ -4,6 +4,7 @@ const express = require('express'); //import express
 const router = express.Router(); //importing express router
 const config = require('config');
 const { check, validationResult } = require('express-validator');
+const request = require('request');
 
 const Schedule = require('../../models/Schedule');
 
@@ -95,6 +96,12 @@ router.put('/:schedule_id', async (req, res) => {
     console.error(error.message);
     res.status(500).send('Server Error');
   }
+});
+
+router.post('/generate', function (req, res, next) {
+  request({
+    uri: 'https://us-central1-cpsc4387p1.cloudfunctions.net/genetic-algorithm-v2',
+  }).pipe(res);
 });
 
 module.exports = router; //exporting the module
