@@ -34,24 +34,18 @@ const InstructorForm = ({
 
   useEffect(() => {
     getInstructors();
-    // if there is no instructor, attempt to fetch one
-    /* if (!instructor) getInstructors();
 
-    // if we finished loading and we do have a instructor
-    // then build our instructorData
-    if (!loading && instructor) {
-      const instructorData = { ...initialState };
-      for (const key in instructor) {
-        if (key in instructorData) instructorData[key] = instructor[key];
-      }
+    /*
+    const instructorData = { ...initialState };
+    for (const key in instructor) {
+      if (key in instructorData) instructorData[key] = instructor[key];
 
       // the disciplines may be an array from our API response
       if (Array.isArray(instructorData.disciplines))
         instructorData.disciplines = instructorData.disciplines.join(', ');
       // set local state with the instructorData
       setFormData(instructorData);
-    }
-    */
+      */
   }, [getInstructors]);
 
   const { lastName, maxClasses, disciplines } = formData;

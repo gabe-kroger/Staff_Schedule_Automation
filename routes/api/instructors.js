@@ -22,7 +22,7 @@ router.post(
       .not()
       .isEmpty()
       .isInt({ min: 1, max: 4 }),
-    check('disciplines', 'atleast one discipline is requried').not().isEmpty(),
+    check('disciplines', 'at least one discipline is requried').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req); //this handles the response
@@ -30,7 +30,17 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { lastName, maxClasses, disciplines } = req.body;
+    const { lastName, maxClasses, disciplines, assignedClasses } = req.body;
+
+    const instructorFields = {};
+    instructorFields.assignedClasses = 0;
+    if (lastName) instructorFields.lastName = lastName;
+    if (maxClasses) instructorFields.maxClasses = maxClasses;
+    if (disciplines) {
+      instructorFields.disciplines = disciplines
+        .split(',')
+        .map((discipline) => discipline.trim());
+    }
 
     try {
       //see if instructor exists
@@ -41,13 +51,7 @@ router.post(
           .json({ errors: [{ msg: 'Instructor already exists' }] });
       }
       //this makes a new instructor instance, but doesn't save it. We need to use instructor.save();
-      let assignedClasses = 0;
-      instructor = new Instructor({
-        lastName,
-        maxClasses,
-        assignedClasses,
-        disciplines,
-      });
+      instructor = new Instructor(instructorFields);
 
       await instructor.save(); //save the instructor in the database
       res.json(instructor);
@@ -93,9 +97,20 @@ router.delete('/:instructor_id', async (req, res) => {
 //#3   @access  public
 router.put('/:instructor_id', async (req, res) => {
   try {
+    const { lastName, maxClasses, disciplines, assignedClasses } = req.body;
+
+    const instructorFields = {};
+    if (assignedClasses) instructorFields.assignedClasses = 0;
+    if (lastName) instructorFields.lastName = lastName;
+    if (maxClasses) instructorFields.maxClasses = maxClasses;
+    if (disciplines) {
+      instructorFields.disciplines = disciplines
+        .split(',')
+        .map((discipline) => discipline.trim());
+    }
     const instructor = await Instructor.findByIdAndUpdate(
       { _id: req.params.instructor_id },
-      req.body,
+      instructorFields,
       { new: true }
     );
 

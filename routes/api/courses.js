@@ -26,6 +26,15 @@ router.post(
 
     const { courseNumber, courseTitle, disciplines } = req.body;
 
+    const courseFields = {};
+    if (courseNumber) courseFields.courseNumber = courseNumber;
+    if (courseTitle) courseFields.courseTitle = courseTitle;
+    if (disciplines) {
+      courseFields.disciplines = disciplines
+        .split(',')
+        .map((discipline) => discipline.trim());
+    }
+
     try {
       //see if course exists
       let course = await Course.findOne({ courseNumber });
@@ -35,11 +44,7 @@ router.post(
           .json({ errors: [{ msg: 'Course already exists' }] });
       }
       //this makes a new course instance, but doesn't save it. We need to use course.save();
-      course = new Course({
-        courseNumber,
-        courseTitle,
-        disciplines,
-      });
+      course = new Course(courseFields);
 
       await course.save(); //save the course in the database
       res.json(course);
@@ -85,9 +90,19 @@ router.delete('/:course_id', async (req, res) => {
 //#3   @access  public
 router.put('/:course_id', async (req, res) => {
   try {
+    const { courseNumber, courseTitle, disciplines } = req.body;
+
+    const courseFields = {};
+    if (courseNumber) courseFields.courseNumber = courseNumber;
+    if (courseTitle) courseFields.courseTitle = courseTitle;
+    if (disciplines) {
+      courseFields.disciplines = disciplines
+        .split(',')
+        .map((discipline) => discipline.trim());
+    }
     const course = await Course.findByIdAndUpdate(
       { _id: req.params.course_id },
-      req.body,
+      courseFields,
       { new: true }
     );
 
