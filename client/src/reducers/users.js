@@ -25,6 +25,7 @@ function userReducer(state = initialState, action) {
       };
     case USER_ERROR:
       return {
+        ...state,
         error: payload,
       };
 

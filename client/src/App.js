@@ -17,6 +17,7 @@ import Courses from './components/courses/Courses';
 import Instructors from './components/instructors/Instructors';
 import EditInstructor from './components/instructor-forms/EditInstructor';
 import EditCourse from './components/course-forms/EditCourse';
+import EditSchedule from './components/schedules/EditSchedule';
 
 //import Profiles from './components/profiles/Profiles';
 //import Profile from './components/profile/Profile';
@@ -101,6 +102,10 @@ const App = () => {
           <Route
             path="edit-course"
             element={<PrivateRoute component={EditCourse} />}
+          />
+          <Route
+            path="edit-schedule"
+            element={<PrivateRoute component={EditSchedule} />}
           />
         </Routes>
       </Router>
