@@ -26,6 +26,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+const uri = process.env.MONGODB_URI;
+
 const PORT = process.env.port || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
