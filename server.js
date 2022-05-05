@@ -1,7 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db'); //we're importing connectDB from config/db.js
-const app = express();
 const path = require('path');
+
+const app = express();
 //connect database
 connectDB();
 //Init Middleware for parser
@@ -26,6 +27,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
