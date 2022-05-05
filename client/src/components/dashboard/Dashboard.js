@@ -40,7 +40,7 @@ const Dashboard = ({
     window.location.reload(false);
   }
 
-  /*const genSchdule = async () => {
+  const genSchdule = async () => {
     setLoading(true);
 
     const res = await fetch('/api/schedule/generate', {
@@ -51,35 +51,34 @@ const Dashboard = ({
     });
     return await res.json();
   };
-  */
 
   return (
-    <section className="container">
-      <h1 className="large text-primary">Dashboard</h1>
+    <section className='container'>
+      <h1 className='large text-primary'>Dashboard</h1>
       <>
-        <section className="container">
+        <section className='container'>
           {scheduleLoading ? (
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className="large text-primary">Schedule</h1>
-              <p className="lead"></p>
-              <div className="profiles">
+              <h1 className='large text-primary'>Schedule</h1>
+              <p className='lead'></p>
+              <div className='profiles'>
                 {schedule.length > 0 ? (
                   schedule.map((item) => (
                     <ScheduleItem key={item._id} schedule={item} />
                   ))
                 ) : (
                   <div>
-                    <p className="lead">
+                    <p className='lead'>
                       No schedule available generate one by clicking the button
                       below
                     </p>
                     <button
-                      className="btn btn-primary"
-                      onClick={() => generateSchedule()}
+                      className='btn btn-primary'
+                      onClick={() => genSchdule()}
                     >
-                      <i className="fas fa-user-minus" /> Generate Schedule
+                      <i className='fas fa-user-minus' /> Generate Schedule
                     </button>
                   </div>
                 )}
@@ -88,16 +87,16 @@ const Dashboard = ({
           )}
         </section>
 
-        <section className="container">
+        <section className='container'>
           {loading ? (
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className="large text-primary">Instructors</h1>
-              <p className="lead">
-                <i className="fab fa-connectdevelop" /> List of instructors
+              <h1 className='large text-primary'>Instructors</h1>
+              <p className='lead'>
+                <i className='fab fa-connectdevelop' /> List of instructors
               </p>
-              <div className="profiles">
+              <div className='profiles'>
                 {instructor.length > 0 ? (
                   instructor.map((item) => (
                     <InstructorItemTwo key={item._id} instructor={item} />
@@ -110,16 +109,16 @@ const Dashboard = ({
           )}
         </section>
 
-        <section className="container">
+        <section className='container'>
           {course.loading ? (
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className="large text-primary">Courses</h1>
-              <p className="lead">
-                <i className="fab fa-connectdevelop" /> List of Courses
+              <h1 className='large text-primary'>Courses</h1>
+              <p className='lead'>
+                <i className='fab fa-connectdevelop' /> List of Courses
               </p>
-              <div className="profiles">
+              <div className='profiles'>
                 {course.length > 0 ? (
                   course.map((item) => (
                     <CourseItemTwo key={item._id} course={item} />
@@ -132,9 +131,9 @@ const Dashboard = ({
           )}
         </section>
 
-        <div className="my-2">
-          <button className="btn btn-danger" onClick={() => deleteAccount()}>
-            <i className="fas fa-user-minus" /> Delete My Account
+        <div className='my-2'>
+          <button className='btn btn-danger' onClick={() => deleteAccount()}>
+            <i className='fas fa-user-minus' /> Delete My Account
           </button>
         </div>
       </>
