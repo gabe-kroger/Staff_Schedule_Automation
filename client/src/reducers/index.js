@@ -9,6 +9,7 @@ import instructor from './instructor';
 import users from './users';
 import schedule from './schedule';
 import collision from './collision';
+import timeslot from './timeslot';
 
 //This is all of our state. We can pull from this state by using connect() and passing in mapStateToProps();
 export default combineReducers({
@@ -21,4 +22,5 @@ export default combineReducers({
   users,
   schedule,
   collision,
+  timeslot,
 });

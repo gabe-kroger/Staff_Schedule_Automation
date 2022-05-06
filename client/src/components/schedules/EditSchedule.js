@@ -7,6 +7,7 @@ import {
   updateSchedule,
   selectedSchedule,
 } from '../../actions/schedule';
+import { getTimeslots } from '../../actions/timeslot';
 import Spinner from '../layout/Spinner';
 
 /*
@@ -19,6 +20,8 @@ const EditSchedule = ({
   schedule: { schedule, loading, scheduleSelected },
   updateSchedule,
   getSchedules,
+  getTimeslots,
+  timeslot: { timeslot },
 }) => {
   const initialState = {
     classID: scheduleSelected.classID,
@@ -36,6 +39,7 @@ const EditSchedule = ({
 
   useEffect(() => {
     getSchedules();
+    getTimeslots();
 
     /*
     const scheduleData = { ...initialState };
@@ -122,16 +126,22 @@ const EditSchedule = ({
               />
               <small className='form-text'>Please enter course title</small>
             </div>
+
             <div className='form-group'>
-              <input
-                type='text'
-                placeholder='scheduledTime'
-                name='scheduledTime'
-                value={scheduledTime}
-                onChange={onChange}
-              />
-              <small className='form-text'>Please enter scheduled time</small>
+              <select>
+                {timeslot.length > 0 ? (
+                  timeslot.map((item) => (
+                    <option key={item.timeslot} value={item.timeslot}>
+                      {item.timeslot}
+                    </option>
+                  ))
+                ) : (
+                  <option value='0'>No timeslots to choose from</option>
+                )}
+              </select>
+              <small className='form-text'>Please select day and time</small>
             </div>
+
             <div className='form-group'>
               <input
                 type='text'
@@ -159,14 +169,17 @@ EditSchedule.propTypes = {
   getSchedules: PropTypes.func.isRequired,
   selectedSchedule: PropTypes.func.isRequired,
   schedule: PropTypes.object.isRequired,
+  timeslot: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   schedule: state.schedule,
+  timeslot: state.timeslot,
 });
 
 export default connect(mapStateToProps, {
   updateSchedule,
   getSchedules,
   selectedSchedule,
+  getTimeslots,
 })(EditSchedule);
