@@ -139,6 +139,11 @@ img {
   outline: none;
 }
 
+
+.drk-outline{
+  border: #6e2639;
+  outline:#6e2639;
+}
 .badge {
   font-size: 0.8rem;
   padding: 0.1rem;
@@ -491,6 +496,27 @@ button {
   color: #aaa;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
+}
+
+.container {
+  display: block;
+  width: 100%;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.cl-right {
+  position: relative;
+  float: right;
+}
+
+/* Stops the float property from affecting content after the columns */
+.columns:after {
+  content: "";
+  display: table;
 }
 
 /* Mobile Styles */

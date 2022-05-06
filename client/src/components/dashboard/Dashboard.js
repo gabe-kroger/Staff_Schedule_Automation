@@ -40,6 +40,7 @@ const Dashboard = ({
   }, [getCurrentProfile]);
 
   const [scheduleLoading, setLoading] = useState(false);
+  const [collisionLoading, setLoading1] = useState(false);
 
   function refreshPage() {
     window.location.reload(false);
@@ -57,58 +58,87 @@ const Dashboard = ({
     return await res.json();
   };
 
+  const ckCollision = async () => {
+    setLoading1(true);
+
+    const res = await fetch('/api/collisions/check', {
+      method: 'POST',
+    }).then(function (data) {
+      setLoading1(false);
+      refreshPage();
+    });
+    return await res.json();
+  };
+
   return (
     <section className='container'>
       <h1 className='large text-primary'>Dashboard</h1>
       <>
-        <section className='row'>
-          <section className='column left'>
-            {scheduleLoading ? (
-              <Spinner />
-            ) : (
-              <Fragment>
-                <h1 className='large text-primary'>Schedule</h1>
-                <p className='lead'></p>
-                <div className='schedule'>
-                  {schedule.length > 0 ? (
-                    schedule.map((item) => (
-                      <ScheduleItem key={item._id} schedule={item} />
-                    ))
-                  ) : (
-                    <div>
-                      <p className='lead'>
-                        No schedule available generate one by clicking the
-                        button below
-                      </p>
-                      <button
-                        className='btn btn-primary'
-                        onClick={() => genSchdule()}
-                      >
-                        <i className='fas fa-user-minus' /> Generate Schedule
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </Fragment>
-            )}
-          </section>
-          <section className='column right'>
+        <section className='container'>
+          {scheduleLoading ? (
+            <Spinner />
+          ) : (
             <Fragment>
-              <h3 className='text-primary'>Errors</h3>
+              <h1 className='large text-primary'>Class Sections</h1>
               <p className='lead'></p>
-              <div className='profiles'>
-                {collision.length > 0 ? (
-                  collision.map((item) => (
-                    <CollisionItem key={item._id} collision={item} />
+              <div className='schedule'>
+                <button
+                  className='btn btn-primary'
+                  onClick={() => genSchdule()}
+                >
+                  <i className='fas fa-user-minus' /> Generate New Schedule
+                </button>
+                <Link className='btn btn-dark my-1' to='/add-schedule'>
+                  Add Section
+                </Link>
+                <button
+                  className='btn btn-primary'
+                  onClick={() => ckCollision()}
+                >
+                  <i className='fas fa-user-minus' /> Check Schedule
+                </button>
+                <section className='container'>
+                  {collisionLoading ? (
+                    <Spinner />
+                  ) : (
+                    <Fragment>
+                      <h3 className='text-primary'>Errors</h3>
+                      <p className='lead'></p>
+                      <div className='profiles'>
+                        {collision.length > 0 ? (
+                          collision.map((item) => (
+                            <CollisionItem key={item._id} collision={item} />
+                          ))
+                        ) : (
+                          <div>
+                            <p className='lead'>No errors in this schedule!</p>
+                          </div>
+                        )}
+                      </div>
+                    </Fragment>
+                  )}
+                </section>
+                {schedule.length > 0 ? (
+                  schedule.map((item) => (
+                    <ScheduleItem key={item._id} schedule={item} />
                   ))
                 ) : (
                   <div>
-                    <p className='lead'>No errors in this schedule!</p>
+                    <p className='lead'>
+                      No schedule available generate one by clicking the button
+                      below
+                    </p>
+                    <button
+                      className='btn btn-primary'
+                      onClick={() => genSchdule()}
+                    >
+                      <i className='fas fa-user-minus' /> Generate Schedule
+                    </button>
                   </div>
                 )}
               </div>
             </Fragment>
-          </section>
+          )}
         </section>
 
         <section className={'container'}>
