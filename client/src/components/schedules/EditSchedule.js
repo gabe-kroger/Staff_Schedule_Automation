@@ -69,75 +69,82 @@ const EditSchedule = ({
     getSchedules();
   };
 
+  const check = async () => {
+    const res = await fetch('/api/error/check', {
+      method: 'POST',
+    }).then(function (data) {});
+    return await res.json();
+  };
+
   return (
-    <section className="container">
+    <section className='container'>
       {loading ? (
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className="large text-primary">
+          <h1 className='large text-primary'>
             {`Edit Schedule ${scheduleSelected.classID}`}
           </h1>
-          <p className="lead">
-            <i className="fas fa-user" />
+          <p className='lead'>
+            <i className='fas fa-user' />
             {'Lets add some changes to an existing schedule'}
           </p>
           <small>* = required field</small>
-          <form className="form" onSubmit={onSubmit}>
-            <div className="form-group">
+          <form className='form' onSubmit={onSubmit}>
+            <div className='form-group'>
               <input
-                type="text"
-                placeholder="crn"
-                name="crn"
+                type='text'
+                placeholder='crn'
+                name='crn'
                 value={crn}
                 onChange={onChange}
               />
-              <small className="form-text">Enter the schedule's crn</small>
+              <small className='form-text'>Enter the schedule's crn</small>
             </div>
-            <div className="form-group">
+            <div className='form-group'>
               <input
-                type="text"
+                type='text'
                 placeholder={classID}
-                name="classID"
+                name='classID'
                 value={classID}
                 onChange={onChange}
               />
-              <small className="form-text">Enter class ID</small>
+              <small className='form-text'>Enter class ID</small>
             </div>
 
-            <div className="form-group">
+            <div className='form-group'>
               <input
-                type="text"
-                placeholder="courseTitle"
-                name="courseTitle"
+                type='text'
+                placeholder='courseTitle'
+                name='courseTitle'
                 value={courseTitle}
                 onChange={onChange}
               />
-              <small className="form-text">Please enter course title</small>
+              <small className='form-text'>Please enter course title</small>
             </div>
-            <div className="form-group">
+            <div className='form-group'>
               <input
-                type="text"
-                placeholder="scheduledTime"
-                name="scheduledTime"
+                type='text'
+                placeholder='scheduledTime'
+                name='scheduledTime'
                 value={scheduledTime}
                 onChange={onChange}
               />
-              <small className="form-text">Please enter scheduled time</small>
+              <small className='form-text'>Please enter scheduled time</small>
             </div>
-            <div className="form-group">
+            <div className='form-group'>
               <input
-                type="text"
-                placeholder="instructor"
-                name="instructor"
+                type='text'
+                placeholder='instructor'
+                name='instructor'
                 value={instructor}
                 onChange={onChange}
               />
-              <small className="form-text">Please enter instructor</small>
+              <small className='form-text'>Please enter instructor</small>
             </div>
 
-            <input type="submit" className="btn btn-primary my-1" />
-            <Link className="btn btn-light my-1" to="/dashboard">
+            <input type='submit' className='btn btn-primary my-1' />
+            <Link className='btn btn-light my-1' to='/dashboard'>
               Go Back
             </Link>
           </form>
