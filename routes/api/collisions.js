@@ -6,7 +6,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 const request = require('request');
 
-const Error = require('../../models/Error');
+const Collision = require('../../models/Collision');
 
 //#1   @route   GET api/schedule
 //#2   @desc    get all schedule elements
@@ -14,8 +14,8 @@ const Error = require('../../models/Error');
 
 router.get('/', async (req, res) => {
   try {
-    const schedule = await Schedule.find();
-    res.json(schedule);
+    const collision = await Collision.find();
+    res.json(collision);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');

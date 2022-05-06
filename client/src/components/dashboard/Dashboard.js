@@ -7,12 +7,14 @@ import Experience from './Experience';
 import Education from './Education';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import { getInstructors } from '../../actions/instructor';
+import { getCollisions } from '../../actions/collision';
 import InstructorItemTwo from '../instructors/InstructorItemTwo';
 import Spinner from '../layout/Spinner';
 import { getCourses } from '../../actions/course';
 import CourseItemTwo from '../courses/CourseItemTwo';
 import { generateSchedule, getSchedules } from '../../actions/schedule';
 import ScheduleItem from '../schedules/ScheduleItem';
+import CollisionItem from '../collisions/CollisionItem';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -26,12 +28,15 @@ const Dashboard = ({
   deleteAccount,
   auth: { user },
   profile: { profile },
+  getCollisions,
+  collision: { collision },
 }) => {
   useEffect(() => {
     getCurrentProfile();
     getInstructors();
     getCourses();
     getSchedules();
+    getCollisions();
   }, [getCurrentProfile]);
 
   const [scheduleLoading, setLoading] = useState(false);
@@ -56,38 +61,57 @@ const Dashboard = ({
     <section className='container'>
       <h1 className='large text-primary'>Dashboard</h1>
       <>
-        <section className='container'>
-          {scheduleLoading ? (
-            <Spinner />
-          ) : (
+        <section className='row'>
+          <section className='column left'>
+            {scheduleLoading ? (
+              <Spinner />
+            ) : (
+              <Fragment>
+                <h1 className='large text-primary'>Schedule</h1>
+                <p className='lead'></p>
+                <div className='schedule'>
+                  {schedule.length > 0 ? (
+                    schedule.map((item) => (
+                      <ScheduleItem key={item._id} schedule={item} />
+                    ))
+                  ) : (
+                    <div>
+                      <p className='lead'>
+                        No schedule available generate one by clicking the
+                        button below
+                      </p>
+                      <button
+                        className='btn btn-primary'
+                        onClick={() => genSchdule()}
+                      >
+                        <i className='fas fa-user-minus' /> Generate Schedule
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </Fragment>
+            )}
+          </section>
+          <section className='column right'>
             <Fragment>
-              <h1 className='large text-primary'>Schedule</h1>
+              <h3 className='text-primary'>Errors</h3>
               <p className='lead'></p>
               <div className='profiles'>
-                {schedule.length > 0 ? (
-                  schedule.map((item) => (
-                    <ScheduleItem key={item._id} schedule={item} />
+                {collision.length > 0 ? (
+                  collision.map((item) => (
+                    <CollisionItem key={item._id} collision={item} />
                   ))
                 ) : (
                   <div>
-                    <p className='lead'>
-                      No schedule available generate one by clicking the button
-                      below
-                    </p>
-                    <button
-                      className='btn btn-primary'
-                      onClick={() => genSchdule()}
-                    >
-                      <i className='fas fa-user-minus' /> Generate Schedule
-                    </button>
+                    <p className='lead'>No errors in this schedule!</p>
                   </div>
                 )}
               </div>
             </Fragment>
-          )}
+          </section>
         </section>
 
-        <section className='container'>
+        <section className={'container'}>
           {loading ? (
             <Spinner />
           ) : (
@@ -149,6 +173,7 @@ Dashboard.propTypes = {
   deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  collision: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -157,6 +182,7 @@ const mapStateToProps = (state) => ({
   instructor: state.instructor,
   course: state.course,
   schedule: state.schedule,
+  collision: state.collision,
 });
 
 export default connect(mapStateToProps, {
@@ -166,6 +192,7 @@ export default connect(mapStateToProps, {
   getInstructors,
   getCourses,
   getSchedules,
+  getCollisions,
 })(Dashboard);
 
 /*  These components go below line 28.  I'll use these for "Add Instructor" and "Add Course"

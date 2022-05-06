@@ -12,10 +12,8 @@ const ScheduleItem = ({ schedule, deleteSchedule, selectedSchedule }) => {
   };
 
   return (
-    <div className="profile bg-light">
-      <img alt="" className="round-img" />
-
-      <div>
+    <div className='profile bg-light'>
+      <div className='left'>
         <h2>{schedule.courseTitle}</h2>
         <p>
           {'Class ID:'} {schedule.classID && <span> {schedule.classID}</span>}
@@ -24,19 +22,21 @@ const ScheduleItem = ({ schedule, deleteSchedule, selectedSchedule }) => {
           {'Instructor:'}{' '}
           {schedule.instructor && <span> {schedule.instructor}</span>}
         </p>
-        <Link to="/edit-schedule">
+      </div>
+      <div className='right'>
+        <Link to='/edit-schedule'>
           <button
-            className="btn btn-primary"
+            className='btn btn-primary'
             onClick={() => selectedSchedule(schedule)}
           >
-            <i className="fas fa-user-minus" /> Edit
+            <i className='fas fa-user-minus' /> Edit
           </button>
         </Link>
         <button
-          className="btn btn-danger"
+          className='btn btn-danger'
           onClick={() => reloadAfterDelete(schedule._id)}
         >
-          <i className="fas fa-user-minus" /> Delete
+          <i className='fas fa-user-minus' /> Delete
         </button>
       </div>
     </div>
