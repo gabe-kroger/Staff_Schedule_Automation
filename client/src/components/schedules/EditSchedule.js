@@ -70,7 +70,7 @@ const EditSchedule = ({
   };
 
   const check = async () => {
-    const res = await fetch('/api/error/check', {
+    const res = await fetch('/api/errors/check', {
       method: 'POST',
     }).then(function (data) {});
     return await res.json();
