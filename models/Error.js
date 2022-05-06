@@ -1,8 +1,7 @@
-//this code is designed to create the schedule objects
+module.exports = () => {
+  const ErrorSchema = mongoose.Schema({
+    error: { type: String },
+  });
 
-const mongoose = require('mongoose'); //importing mongoose
-const ErrorSchema = new mongoose.Schema({
-  error: String,
-});
-
-module.exports = Error = mongoose.model('error', ErrorSchema); //exporting CourseSchema model
+  return mongoose.model('error', ErrorSchema);
+};
