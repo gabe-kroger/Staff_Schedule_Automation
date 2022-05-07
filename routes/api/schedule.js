@@ -7,13 +7,15 @@ const { check, validationResult } = require('express-validator');
 const request = require('request');
 
 const Schedule = require('../../models/Schedule');
-
+const Course = require('../../models/Course');
+const Instructor = require('../../models/Instructor');
 router.post(
   '/',
   [
     check('classID', 'class id number is required').not().isEmpty(),
-    check('courseTitle', 'Please enter a course title').not().isEmpty(),
+    check('crn', 'Please enter a crn').not().isEmpty(),
     check('instructor', 'enter a instructor').not().isEmpty(),
+    check('scheduledTime', 'Please select a time').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req); //this handles the response
@@ -24,18 +26,31 @@ router.post(
     const { classID, crn, courseTitle, instructor, scheduledTime } = req.body;
 
     try {
-      //see if course exists
+      //see if schedule exists
       let schedule = await Schedule.findOne({ classID });
       if (schedule) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Course already exists' }] });
+          .json({ errors: [{ msg: 'Sschedule id exists' }] });
+      }
+      // check if user entered crn is valid
+      let course = await Course.findOne({ courseNumber: crn });
+      if (!course) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'crn not found in couerses' }] });
+      }
+      //check if instructor is valid
+      let inst = await Instructor.findOne({ lastName: instructor });
+      if (!inst) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'instructor not found in instructors' }] });
       }
       //this makes a new course instance, but doesn't save it. We need to use course.save();
       schedule = new Schedule({
         classID,
         crn,
-        courseTitle,
         instructor,
         scheduledTime,
       });
@@ -100,7 +115,7 @@ router.put('/:schedule_id', async (req, res) => {
 
 router.post('/generate', function (req, res, next) {
   request({
-    uri: 'https://us-central1-cpsc4387p1.cloudfunctions.net/genetic-algorithm-v2',
+    uri: 'https://us-central1-cpsc4387p1.cloudfunctions.net/geneticalgo',
   }).pipe(res);
 });
 

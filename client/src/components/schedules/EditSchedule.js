@@ -7,6 +7,7 @@ import {
   updateSchedule,
   selectedSchedule,
 } from '../../actions/schedule';
+import { getTimeslots } from '../../actions/timeslot';
 import Spinner from '../layout/Spinner';
 
 /*
@@ -19,6 +20,8 @@ const EditSchedule = ({
   schedule: { schedule, loading, scheduleSelected },
   updateSchedule,
   getSchedules,
+  getTimeslots,
+  timeslot: { timeslot },
 }) => {
   const initialState = {
     classID: scheduleSelected.classID,
@@ -36,6 +39,7 @@ const EditSchedule = ({
 
   useEffect(() => {
     getSchedules();
+    getTimeslots();
 
     /*
     const scheduleData = { ...initialState };
@@ -67,82 +71,97 @@ const EditSchedule = ({
       updateSchedule(scheduleSelected._id, formData, navigate);
     }
     getSchedules();
+    check();
+  };
+
+  const check = async () => {
+    const res = await fetch('/api/collision/check', {
+      method: 'POST',
+    }).then(function (data) {});
+    return await res.json();
   };
 
   return (
-    <section className="container">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          <h1 className="large text-primary">
-            {`Edit Schedule ${scheduleSelected.classID}`}
-          </h1>
-          <p className="lead">
-            <i className="fas fa-user" />
-            {'Lets add some changes to an existing schedule'}
-          </p>
-          <small>* = required field</small>
-          <form className="form" onSubmit={onSubmit}>
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder="crn"
-                name="crn"
-                value={crn}
-                onChange={onChange}
-              />
-              <small className="form-text">Enter the schedule's crn</small>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder={classID}
-                name="classID"
-                value={classID}
-                onChange={onChange}
-              />
-              <small className="form-text">Enter class ID</small>
-            </div>
+    <section className='container'>
+      <Fragment>
+        <h1 className='large text-primary'>
+          {`Edit Schedule ${scheduleSelected.classID}`}
+        </h1>
+        <p className='lead'>
+          <i className='fas fa-user' />
+          {'Lets add some changes to an existing schedule'}
+        </p>
+        <small>* = required field</small>
+        <form className='form' onSubmit={onSubmit}>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='crn'
+              name='crn'
+              value={crn}
+              onChange={onChange}
+            />
+            <small className='form-text'>Enter the schedule's crn</small>
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder={classID}
+              name='classID'
+              value={classID}
+              onChange={onChange}
+            />
+            <small className='form-text'>Enter class ID</small>
+          </div>
 
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder="courseTitle"
-                name="courseTitle"
-                value={courseTitle}
-                onChange={onChange}
-              />
-              <small className="form-text">Please enter course title</small>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder="scheduledTime"
-                name="scheduledTime"
-                value={scheduledTime}
-                onChange={onChange}
-              />
-              <small className="form-text">Please enter scheduled time</small>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder="instructor"
-                name="instructor"
-                value={instructor}
-                onChange={onChange}
-              />
-              <small className="form-text">Please enter instructor</small>
-            </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='courseTitle'
+              name='courseTitle'
+              value={courseTitle}
+              onChange={onChange}
+            />
+            <small className='form-text'>Please enter course title</small>
+          </div>
 
-            <input type="submit" className="btn btn-primary my-1" />
-            <Link className="btn btn-light my-1" to="/dashboard">
-              Go Back
-            </Link>
-          </form>
-        </Fragment>
-      )}
+          <div className='form-group'>
+            <select
+              placeholder='scheduledTime'
+              name='scheduledTime'
+              value={scheduledTime}
+              onChange={onChange}
+            >
+              {timeslot.length > 0 ? (
+                timeslot.map((item) => (
+                  <option key={item.timeslot} value={item.timeslot}>
+                    {item.timeslot}
+                  </option>
+                ))
+              ) : (
+                <option value='0'>No timeslots to choose from</option>
+              )}
+            </select>
+            <small className='form-text'>Please select day and time</small>
+          </div>
+
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='instructor'
+              name='instructor'
+              value={instructor}
+              onChange={onChange}
+            />
+            <small className='form-text'>Please enter instructor</small>
+          </div>
+
+          <input type='submit' className='btn btn-primary my-1' />
+          <Link className='btn btn-light my-1' to='/dashboard'>
+            Go Back
+          </Link>
+        </form>
+      </Fragment>
     </section>
   );
 };
@@ -152,14 +171,17 @@ EditSchedule.propTypes = {
   getSchedules: PropTypes.func.isRequired,
   selectedSchedule: PropTypes.func.isRequired,
   schedule: PropTypes.object.isRequired,
+  timeslot: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   schedule: state.schedule,
+  timeslot: state.timeslot,
 });
 
 export default connect(mapStateToProps, {
   updateSchedule,
   getSchedules,
   selectedSchedule,
+  getTimeslots,
 })(EditSchedule);
