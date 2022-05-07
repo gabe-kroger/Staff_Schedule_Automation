@@ -53,9 +53,6 @@ const Navbar = ({
   const guestLinks = (
     <ul>
       <li>
-        <Link to='/settings'>Settings</Link>
-      </li>
-      <li>
         <Link to='/register'>Register</Link>
       </li>
       <li>
