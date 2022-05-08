@@ -91,6 +91,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <option value={'Root'}>Root</option>
             <option value={'Admin'}>Admin</option>
             <option value={'Assistant'}>Assistant</option>
+<<<<<<< HEAD
+=======
+            <option value={'Root'}>Root</option>
+>>>>>>> parent of cba67d3 (test)
           </select>
         </div>
 
