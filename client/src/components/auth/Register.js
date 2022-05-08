@@ -91,6 +91,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <option value={'Admin'}>Admin</option>
             <option value={'Assistant'}>Assistant</option>
             <option value={'Root'}>Root</option>
+            <option value={'Test'}>Test</option>
           </select>
         </div>
 
