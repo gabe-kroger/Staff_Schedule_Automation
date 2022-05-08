@@ -88,9 +88,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="role"
             required
           >
+            <option value={'Root'}>Root</option>
             <option value={'Admin'}>Admin</option>
             <option value={'Assistant'}>Assistant</option>
-            <option value={'Root'}>Root</option>
           </select>
         </div>
 
