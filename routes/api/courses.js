@@ -17,6 +17,7 @@ router.post(
     check('courseNumber', 'course number is required').not().isEmpty(),
     check('courseTitle', 'Please enter a course title').not().isEmpty(),
     check('disciplines', 'atleast one discipline is requried').not().isEmpty(),
+    check('sections', 'please enter number of sections').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req); //this handles the response
@@ -24,7 +25,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //if there are errors, send a 400 error
     }
 
-    const { courseNumber, courseTitle, disciplines } = req.body;
+    const { courseNumber, courseTitle, disciplines, sections } = req.body;
 
     const courseFields = {};
     if (courseNumber) courseFields.courseNumber = courseNumber;
@@ -34,6 +35,7 @@ router.post(
         .split(',')
         .map((discipline) => discipline.trim());
     }
+    if (sections) courseFields.sections = sections;
 
     try {
       //see if course exists
@@ -90,7 +92,7 @@ router.delete('/:course_id', async (req, res) => {
 //#3   @access  public
 router.put('/:course_id', async (req, res) => {
   try {
-    const { courseNumber, courseTitle, disciplines } = req.body;
+    const { courseNumber, courseTitle, disciplines, sections } = req.body;
 
     const courseFields = {};
     if (courseNumber) courseFields.courseNumber = courseNumber;
@@ -100,6 +102,8 @@ router.put('/:course_id', async (req, res) => {
         .split(',')
         .map((discipline) => discipline.trim());
     }
+    if (sections) courseFields.sections = sections;
+
     const course = await Course.findByIdAndUpdate(
       { _id: req.params.course_id },
       courseFields,

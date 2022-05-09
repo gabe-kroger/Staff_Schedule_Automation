@@ -115,7 +115,7 @@ router.put('/:schedule_id', async (req, res) => {
 
 router.post('/generate', function (req, res, next) {
   request({
-    uri: 'https://us-central1-cpsc4387p1.cloudfunctions.net/geneticalgo',
+    uri: 'https://us-central1-cpsc4387p1.cloudfunctions.net/geneticalgo2',
   }).pipe(res);
 });
 
