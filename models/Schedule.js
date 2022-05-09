@@ -11,12 +11,16 @@ const ScheduleSchema = new mongoose.Schema({
   courseTitle: {
     type: String,
   },
-  instructor: {
-    type: String,
-  },
-  scheduledTime: {
-    type: String,
-  },
+  instructor: [
+    {
+      type: String,
+    },
+  ],
+  scheduledTime: [
+    {
+      type: String,
+    },
+  ],
 });
 
 module.exports = Schedule = mongoose.model('schedule', ScheduleSchema); //exporting CourseSchema model
