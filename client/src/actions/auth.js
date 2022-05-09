@@ -29,6 +29,7 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
@@ -42,6 +43,8 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
+    dispatch(setAlert('User Registered', 'success'));
+
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;

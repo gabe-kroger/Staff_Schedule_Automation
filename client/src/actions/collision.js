@@ -13,6 +13,7 @@ export const getCollisions = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COLLISION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
