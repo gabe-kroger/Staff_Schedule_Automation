@@ -17,6 +17,9 @@ const CourseSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  sections: {
+    type: Number,
+  },
 });
 
 module.exports = Course = mongoose.model('course', CourseSchema); //exporting CourseSchema model
