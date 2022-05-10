@@ -12,35 +12,42 @@ const ScheduleItem = ({ schedule, deleteSchedule, selectedSchedule }) => {
   };
 
   return (
-    <div className='container profile bg-light'>
-      <div className='columns'>
-        <div className='column'>
-          <h3>{schedule.crn}</h3>
-          <h3>{schedule.courseTitle}</h3>
-          <h3>{schedule.instructor}</h3>
-        </div>
+    <div className="profile bg-light">
+      <ul>
+        {schedule.instructors.slice(0, 5).map((instructor, index) => (
+          <li key={index} className="text-primary">
+            <i className="fas fa-check" /> {instructor}
+          </li>
+        ))}
+      </ul>
 
-        <div className='column'>
-          <h3>{schedule.scheduledTime}</h3>
-          <Link to='/edit-schedule'>
-            <button
-              className='btn btn-primary'
-              onClick={() => selectedSchedule(schedule)}
-            >
-              <i className='fas fa-user-minus' /> Edit
-            </button>
-          </Link>
+      <div>
+        <h3>{schedule.crn}</h3>
+        <h3>{schedule.courseTitle}</h3>
+
+        <Link to="/edit-schedule">
           <button
-            className='btn btn-danger'
-            onClick={() => reloadAfterDelete(schedule._id)}
+            className="btn btn-primary"
+            onClick={() => selectedSchedule(schedule)}
           >
-            <i className='fas fa-user-minus' /> Delete
+            <i className="fas fa-user-minus" /> Edit
           </button>
-        </div>
-
-        <div className='column cl-right'>
-          <h3>Class ID: {schedule.classID}</h3>
-        </div>
+        </Link>
+        <button
+          className="btn btn-danger"
+          onClick={() => reloadAfterDelete(schedule._id)}
+        >
+          <i className="fas fa-user-minus" /> Delete
+        </button>
+      </div>
+      <div>
+        <ul>
+          {schedule.scheduledTimes.slice(0, 5).map((scheduledTime, index) => (
+            <li key={index} className="text-primary">
+              <i className="fas fa-check" /> {scheduledTime}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

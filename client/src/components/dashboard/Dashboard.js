@@ -24,7 +24,7 @@ const Dashboard = ({
   getSchedules,
   instructor: { instructor, loading },
   course: { course },
-  schedule: { schedule, scheduleSelected },
+  schedule,
   deleteAccount,
   auth: { user },
   profile: { profile },
@@ -32,14 +32,14 @@ const Dashboard = ({
   collision: { collision },
 }) => {
   useEffect(() => {
+    getSchedules();
     getCurrentProfile();
     getInstructors();
     getCourses();
-    getSchedules();
     getCollisions();
-  }, [getCurrentProfile]);
+  }, [getSchedules]);
 
-  const [scheduleLoading, setLoading] = useState(false);
+  // const [scheduleLoading, setLoading] = useState(false);
   const [collisionLoading, setLoading1] = useState(false);
 
   function refreshPage() {
@@ -71,68 +71,68 @@ const Dashboard = ({
   };
 
   return (
-    <section className='container'>
-      <h1 className='large text-primary'>Dashboard</h1>
+    <section className="container">
+      <h1 className="large text-primary">Dashboard</h1>
       <>
-        <section className='container'>
-          {scheduleLoading ? (
+        <section className="container">
+          {schedule.loading ? (
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className='large text-primary'>Class Sections</h1>
-              <p className='lead'></p>
-              <div className='schedule'>
+              <h1 className="large text-primary">Class Sections</h1>
+              <p className="lead"></p>
+              <div className="profiles">
                 <button
-                  className='btn btn-primary'
+                  className="btn btn-primary"
                   onClick={() => genSchdule()}
                 >
-                  <i className='fas fa-user-minus' /> Generate New Schedule
+                  <i className="fas fa-user-minus" /> Generate New Schedule
                 </button>
-                <Link className='btn btn-dark my-1' to='/add-schedule'>
+                <Link className="btn btn-dark my-1" to="/add-schedule">
                   Add Section
                 </Link>
                 <button
-                  className='btn btn-primary'
+                  className="btn btn-primary"
                   onClick={() => ckCollision()}
                 >
-                  <i className='fas fa-user-minus' /> Check Schedule
+                  <i className="fas fa-user-minus" /> Check Schedule
                 </button>
-                <section className='container'>
+                <section className="container">
                   {collisionLoading ? (
                     <Spinner />
                   ) : (
                     <Fragment>
-                      <h3 className='text-primary'>Errors</h3>
-                      <p className='lead'></p>
-                      <div className='profiles'>
+                      <h3 className="text-primary">Errors</h3>
+                      <p className="lead"></p>
+                      <div className="profiles">
                         {collision.length > 0 ? (
                           collision.map((item) => (
                             <CollisionItem key={item._id} collision={item} />
                           ))
                         ) : (
                           <div>
-                            <p className='lead'>No errors in this schedule!</p>
+                            <p className="lead">No errors in this schedule!</p>
                           </div>
                         )}
                       </div>
                     </Fragment>
                   )}
                 </section>
-                {schedule.length > 0 ? (
-                  schedule.map((item) => (
+                {schedule.schedule.length > 0 ? (
+                  schedule.schedule.map((item) => (
                     <ScheduleItem key={item._id} schedule={item} />
                   ))
                 ) : (
                   <div>
-                    <p className='lead'>
+                    <p className="lead">
                       No schedule available generate one by clicking the button
                       below
                     </p>
                     <button
-                      className='btn btn-primary'
+                      className="btn btn-primary"
                       onClick={() => genSchdule()}
                     >
-                      <i className='fas fa-user-minus' /> Generate Schedule
+                      <i className="fas fa-user-minus" /> Generate Schedule
                     </button>
                   </div>
                 )}
@@ -146,11 +146,11 @@ const Dashboard = ({
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className='large text-primary'>Instructors</h1>
-              <p className='lead'>
-                <i className='fab fa-connectdevelop' /> List of instructors
+              <h1 className="large text-primary">Instructors</h1>
+              <p className="lead">
+                <i className="fab fa-connectdevelop" /> List of instructors
               </p>
-              <div className='profiles'>
+              <div className="profiles">
                 {instructor.length > 0 ? (
                   instructor.map((item) => (
                     <InstructorItemTwo key={item._id} instructor={item} />
@@ -163,16 +163,16 @@ const Dashboard = ({
           )}
         </section>
 
-        <section className='container'>
+        <section className="container">
           {course.loading ? (
             <Spinner />
           ) : (
             <Fragment>
-              <h1 className='large text-primary'>Courses</h1>
-              <p className='lead'>
-                <i className='fab fa-connectdevelop' /> List of Courses
+              <h1 className="large text-primary">Courses</h1>
+              <p className="lead">
+                <i className="fab fa-connectdevelop" /> List of Courses
               </p>
-              <div className='profiles'>
+              <div className="profiles">
                 {course.length > 0 ? (
                   course.map((item) => (
                     <CourseItemTwo key={item._id} course={item} />
@@ -185,9 +185,9 @@ const Dashboard = ({
           )}
         </section>
 
-        <div className='my-2'>
-          <button className='btn btn-danger' onClick={() => deleteAccount()}>
-            <i className='fas fa-user-minus' /> Delete My Account
+        <div className="my-2">
+          <button className="btn btn-danger" onClick={() => deleteAccount()}>
+            <i className="fas fa-user-minus" /> Delete My Account
           </button>
         </div>
       </>
