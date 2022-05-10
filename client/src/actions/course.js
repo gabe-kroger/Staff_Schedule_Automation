@@ -29,7 +29,6 @@ export const getCourses = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };

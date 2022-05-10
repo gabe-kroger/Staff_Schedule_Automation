@@ -13,7 +13,6 @@ export const getTimeslots = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: TIMESLOT_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };

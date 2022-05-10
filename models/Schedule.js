@@ -11,11 +11,11 @@ const ScheduleSchema = new mongoose.Schema({
   courseTitle: {
     type: String,
   },
-  instructors: {
-    type: [String],
+  instructor: {
+    type: String,
   },
-  scheduledTimes: {
-    type: [String],
+  scheduledTime: {
+    type: String,
   },
 });
 

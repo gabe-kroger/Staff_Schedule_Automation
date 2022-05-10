@@ -29,7 +29,6 @@ export const getInstructors = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: INSTRUCTOR_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };

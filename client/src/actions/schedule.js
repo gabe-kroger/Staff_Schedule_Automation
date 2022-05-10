@@ -21,7 +21,6 @@ export const getSchedules = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: SCHEDULE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };

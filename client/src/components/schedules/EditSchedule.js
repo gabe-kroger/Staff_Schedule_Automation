@@ -27,8 +27,8 @@ const EditSchedule = ({
     classID: scheduleSelected.classID,
     crn: scheduleSelected.crn,
     courseTitle: scheduleSelected.courseTitle,
-    instructors: scheduleSelected.instructors,
-    scheduledTimes: scheduleSelected.scheduledTimes,
+    instructor: scheduleSelected.instructor,
+    scheduledTime: scheduleSelected.scheduledTime,
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -54,7 +54,7 @@ const EditSchedule = ({
       */
   }, [getSchedules]);
 
-  const { classID, crn, courseTitle, scheduledTimes, instructors } = formData;
+  const { classID, crn, courseTitle, scheduledTime, instructor } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,8 +65,8 @@ const EditSchedule = ({
       classID !== null &&
       crn !== '' &&
       courseTitle !== '' &&
-      scheduledTimes !== '' &&
-      instructors !== ''
+      scheduledTime !== '' &&
+      instructor !== ''
     ) {
       updateSchedule(scheduleSelected._id, formData, navigate);
     }
@@ -82,54 +82,54 @@ const EditSchedule = ({
   };
 
   return (
-    <section className="container">
+    <section className='container'>
       <Fragment>
-        <h1 className="large text-primary">
+        <h1 className='large text-primary'>
           {`Edit Schedule ${scheduleSelected.classID}`}
         </h1>
-        <p className="lead">
-          <i className="fas fa-user" />
+        <p className='lead'>
+          <i className='fas fa-user' />
           {'Lets add some changes to an existing schedule'}
         </p>
         <small>* = required field</small>
-        <form className="form" onSubmit={onSubmit}>
-          <div className="form-group">
+        <form className='form' onSubmit={onSubmit}>
+          <div className='form-group'>
             <input
-              type="text"
-              placeholder="crn"
-              name="crn"
+              type='text'
+              placeholder='crn'
+              name='crn'
               value={crn}
               onChange={onChange}
             />
-            <small className="form-text">Enter the schedule's crn</small>
+            <small className='form-text'>Enter the schedule's crn</small>
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              type="text"
+              type='text'
               placeholder={classID}
-              name="classID"
+              name='classID'
               value={classID}
               onChange={onChange}
             />
-            <small className="form-text">Enter class ID</small>
+            <small className='form-text'>Enter class ID</small>
           </div>
 
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              type="text"
-              placeholder="courseTitle"
-              name="courseTitle"
+              type='text'
+              placeholder='courseTitle'
+              name='courseTitle'
               value={courseTitle}
               onChange={onChange}
             />
-            <small className="form-text">Please enter course title</small>
+            <small className='form-text'>Please enter course title</small>
           </div>
-          {/*
-          <div className="form-group">
+
+          <div className='form-group'>
             <select
-              placeholder="scheduledTimes"
-              name="scheduledTimes"
-              value={scheduledTimes}
+              placeholder='scheduledTime'
+              name='scheduledTime'
+              value={scheduledTime}
               onChange={onChange}
             >
               {timeslot.length > 0 ? (
@@ -139,41 +139,25 @@ const EditSchedule = ({
                   </option>
                 ))
               ) : (
-                <option value="0">No timeslots to choose from</option>
+                <option value='0'>No timeslots to choose from</option>
               )}
             </select>
-            <small className="form-text">Please select day and time</small>
-          </div>
-              */}
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="scheduledTimes"
-              name="scheduledTimes"
-              value={scheduledTimes}
-              onChange={onChange}
-            />
-            <small className="form-text">
-              Please use backslash separated values (eg. scheduled Time 1/scheduled
-              Time 2)
-            </small>
+            <small className='form-text'>Please select day and time</small>
           </div>
 
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              type="text"
-              placeholder="instructors"
-              name="instructors"
-              value={instructors}
+              type='text'
+              placeholder='instructor'
+              name='instructor'
+              value={instructor}
               onChange={onChange}
             />
-            <small className="form-text">
-              Please use comma separated values (eg. Instructor 1, Instructor 2)
-            </small>
+            <small className='form-text'>Please enter instructor</small>
           </div>
 
-          <input type="submit" className="btn btn-primary my-1" />
-          <Link className="btn btn-light my-1" to="/dashboard">
+          <input type='submit' className='btn btn-primary my-1' />
+          <Link className='btn btn-light my-1' to='/dashboard'>
             Go Back
           </Link>
         </form>
