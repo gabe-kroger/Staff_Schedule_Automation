@@ -3,5 +3,3 @@
 3.  in the root directory, use npm run dev to start frontend and backend simultaneously
 
 
-rm -rf .git --> delete git repository in case there is an extra when using create-react-app
-
